@@ -1,0 +1,16 @@
+[
+{
+  "modid": "jarm",
+  "name": "J.A.R.M.",
+  "description": "Just another random mod.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["cabralRodrigo"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

@@ -1,0 +1,72 @@
+itemGroup.jarm=J.A.R.M.
+container.jarm:amulet_storage.name=Storage Amulet
+container.jarm:seed_bag.name=Seed Bag
+container.jarm:amulet_potion.name=Potion Amulet
+misc.jarm:info.food.heal=$6Heal:$b %s
+misc.jarm:info.food.saturation=$6Saturation:$b %s
+
+item.jarm:amulet_teleposer.name=Teleposer Amulet
+item.jarm:amulet_teleposer.tooltip=Now you can pickup Mob Spawners!
+item.jarm:amulet_teleposer.tooltip.mob=$6Mob:$b %s
+item.jarm:amulet_teleposer.tooltip.pickup=$b$oRight-click$r$7 on a mob spawner to get it
+item.jarm:amulet_teleposer.tooltip.place=$b$oRight-click$r$7 o place it
+
+
+tile.jarm:ender_enchantment_table.name=[WIP] Ender Enchantment Table
+
+item.jarm:amulet_potion.name=Potion Amulet
+item.jarm:amulet_potion.tooltip=Now you don't have to drink no more
+item.jarm:amulet_potion.tooltip.use=$b$oSneak + right-click$r$7 to fill the amulet with potions
+item.jarm:amulet_potion.tooltip.enable=$b$oRight-click$r$7 to disable
+item.jarm:amulet_potion.tooltip.disable=$b$oRight-click$r$7 to enable
+
+item.jarm:amulet_experience.name=[WIP] Experience Amulet
+item.jarm:amulet_experience.tooltip=Store your experience
+item.jarm:amulet_experience.tooltip.cycle_mode=$b$oSneak + right-click$r$7 to change modes
+item.jarm:amulet_experience.tooltip.mode.disabled=Disabled
+item.jarm:amulet_experience.tooltip.mode.absorb=Absorbing Experience
+item.jarm:amulet_experience.tooltip.mode.retrieve=Giving Experience
+item.jarm:amulet_experience.tooltip.total_levels=Levels: %s
+item.jarm:amulet_experience.tooltip.total_xp=Experience: %s
+
+
+item.jarm:seed_bag.name=Seed Bag
+item.jarm:seed_bag.tooltip=Plants seeds on a 9x9 area
+item.jarm:seed_bag.tooltip.easter_egg=You seems to remember where this item came from...
+
+item.jarm:amulet_ender_storage.name=Ender Storage Amulet
+item.jarm:amulet_ender_storage.tooltip=Keep your things safe in the end
+
+item.jarm:amulet_magnetic.name=Magnetic Amulet
+item.jarm:amulet_magnetic.tooltip.disabled=$b$oSneak + right-click$r$7 to enable
+item.jarm:amulet_magnetic.tooltip.enabled=$b$oSneak + right-click$r$7 to disable
+item.jarm:amulet_magnetic.tooltip=Attracts just iron or all items?
+
+item.jarm:amulet_storage.name=Storage Amulet
+item.jarm:amulet_storage.tooltip=Keep your things in a safe-ish place
+
+item.jarm:amulet_teleport.name=Teleport Amulet
+item.jarm:amulet_teleport.tooltip.dimension=$6Dimension:$b %s
+item.jarm:amulet_teleport.tooltip.hold_shift=Hold $b$oshift$r$7 for more info
+item.jarm:amulet_teleport.tooltip.location=$6Location:$b %s %s %s
+item.jarm:amulet_teleport.tooltip.no_location=$b$oRight-click$r$7 to set the current location
+item.jarm:amulet_teleport.tooltip=Move you around
+
+item.jarm:item_resource.fluffy_cloth.name=Fluffy Cloth
+item.jarm:item_resource.iron_spikes.name=Iron Spikes
+item.jarm:item_resource.stone_plate.name=Stone Plate
+item.jarm:item_resource.super_glue.name=Super Glue
+item.jarm:item_resource.tooltip=Crafting item
+
+item.jarm:orb_of_sin.cannot_teleport=$7$oNothing seems to happen
+item.jarm:orb_of_sin.name=Orb of Sin
+item.jarm:orb_of_sin.tooltip=The place that only sinners go after the first death
+
+item.jarm:super_fluffy_boots.name=Super Fluffy Boots
+item.jarm:super_fluffy_boots.tooltip=So fluffy that you'll never feel a fall again
+item.jarm:super_fluffy_chestplate.name=Super Fluffy Chestplate
+item.jarm:super_fluffy_chestplate.tooltip=So fluffy that you'll be lighter than the air
+
+item.jarm:wool_card.name=Wool Card
+item.jarm:wool_card.tooltip=Undo the wool
+item.jarm:wool_card.tooltip.easter_egg=You seems to remember where this item came from...

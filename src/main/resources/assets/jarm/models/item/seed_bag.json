@@ -1,0 +1,6 @@
+{
+  "parent": "jarm:item/item_model_base",
+  "textures": {
+    "layer0": "jarm:items/seed_bag"
+  }
+}
