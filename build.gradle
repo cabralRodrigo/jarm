@@ -23,12 +23,20 @@ minecraft {
     version = "${config.mc_version}-${config.forge_version}"
     runDir = "run"
     mappings = "stable_20"
+    useDepAts = true
 
     replace "@@VERSION@@", config.version
     replaceIn 'LibMod.java'
 }
 
+repositories {
+    maven {
+        name "jei"
+        url "http://dvs1.progwml6.com/files/maven"
+    }
+}
 dependencies {
+    deobfCompile "mezz.jei:jei_${config.mc_version}:${config.jei_version}"
 }
 
 processResources
