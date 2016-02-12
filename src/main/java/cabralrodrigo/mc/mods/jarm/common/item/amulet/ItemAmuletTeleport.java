@@ -69,8 +69,6 @@ public class ItemAmuletTeleport extends ItemAmuletBase {
                     manager.transferPlayerToDimension((EntityPlayerMP) player, info.getDimensionID(), new TeleporterAmulet((WorldServer) world, info));
                 } else
                     player.setPositionAndUpdate(pos.getX() + .5F, pos.getY(), pos.getZ() + .5F);
-
-                // TODO: insert particles and sounds
             } else {
                 info.setLocation(player.dimension, new BlockPos(player.posX, player.posY, player.posZ));
                 info.save();

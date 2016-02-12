@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 
 public class ItemAmuletExperience extends Item implements IVariantRegistrable {
-    //TODO: Finish this item
     private static final String[] MODES = new String[]{"disabled", "absorb", "retrieve"};
 
     public ItemAmuletExperience() {

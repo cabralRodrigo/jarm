@@ -61,7 +61,6 @@ public class ItemAmuletMagnetic extends ItemAmuletVariantBase {
 
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        // TODO: Make this method better
         if (event.phase == Phase.END && !event.player.worldObj.isRemote) {
             if (this.playerHasMagnetActive(event.player)) {
                 EntityPlayer player = event.player;
