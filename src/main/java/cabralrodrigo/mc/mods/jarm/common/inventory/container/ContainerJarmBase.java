@@ -23,7 +23,6 @@ public abstract class ContainerJarmBase extends Container implements IContainerS
         this.ROWS = inventory.getRowCount();
         this.CONTAINER_START = 0;
         this.CONTAINER_END = (COLUMNS * ROWS) - 1;
-        this.CONTAINER_END = (COLUMNS * ROWS) - 1;
         this.PLAYER_MAIN_START = CONTAINER_END + 1;
         this.PLAYER_MAIN_END = PLAYER_MAIN_START + ((3 * 9) - 1);
         this.PLAYER_BAR_START = PLAYER_MAIN_END + 1;
