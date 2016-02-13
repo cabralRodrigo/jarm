@@ -19,6 +19,7 @@ public class ModItems {
     public static ItemAmuletExperience amulet_experience;
     public static ItemAmuletPotion amulet_potion;
     public static ItemAmuletTeleposer amulet_teleposer;
+    public static ItemAmuletCage amulet_cage;
 
     public static void preInit() {
         Jarm.proxy.registerItem(super_fluffy_chestplate = new ItemSuperFluffyChestplate());
@@ -34,5 +35,6 @@ public class ModItems {
         Jarm.proxy.registerItem(amulet_experience = new ItemAmuletExperience());
         Jarm.proxy.registerItem(amulet_potion = new ItemAmuletPotion());
         Jarm.proxy.registerItem(amulet_teleposer = new ItemAmuletTeleposer());
+        Jarm.proxy.registerItem(amulet_cage = new ItemAmuletCage());
     }
 }

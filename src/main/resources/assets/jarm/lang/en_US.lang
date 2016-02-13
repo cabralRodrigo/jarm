@@ -11,6 +11,11 @@ item.jarm:amulet_teleposer.tooltip.mob=$6Mob:$b %s
 item.jarm:amulet_teleposer.tooltip.pickup=$b$oRight-click$r$7 on a mob spawner to get it
 item.jarm:amulet_teleposer.tooltip.place=$b$oRight-click$r$7 o place it
 
+item.jarm:amulet_cage.name=Cage Amulet
+item.jarm:amulet_cage.tooltip=Like a pokeball in minecraft!
+item.jarm:amulet_cage.tooltip.entity_name=$6Mob:$b %s
+item.jarm:amulet_cage.tooltip.release=$b$oRight-click$r$7 to release the mob
+item.jarm:amulet_cage.tooltip.pickup=$b$oRight-click$r$7 to pickup a mob
 
 tile.jarm:ender_enchantment_table.name=[WIP] Ender Enchantment Table
 

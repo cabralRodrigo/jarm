@@ -109,6 +109,16 @@ public class ModRecipes {
                 "gemDiamond"
         }));
 
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModItems.amulet_cage), new Object[]{
+                ModItems.item_resource.createItemStack(ItemResource.ResourceType.STONE_PLATE),
+                "gemDiamond",
+                "slimeball",
+                Items.rotten_flesh,
+                Items.bone,
+                Items.spider_eye,
+                Items.gunpowder
+        }));
+
         FurnaceRecipes.instance().addSmeltingRecipeForBlock(Blocks.stone, ModItems.item_resource.createItemStack(ItemResource.ResourceType.STONE_PLATE), 0F);
     }
 

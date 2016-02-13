@@ -14,4 +14,5 @@ public final class LibItems {
     public static final String AMULET_EXPERIENCE = "amulet_experience";
     public static final String AMULET_POTION = "amulet_potion";
     public static final String AMULET_TELEPOSER = "amulet_teleposer";
+    public static final String AMULET_CAGE = "amulet_cage";
 }
