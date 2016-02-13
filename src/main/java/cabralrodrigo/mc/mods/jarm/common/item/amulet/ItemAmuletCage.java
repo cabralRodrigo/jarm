@@ -11,7 +11,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
@@ -100,16 +99,6 @@ public class ItemAmuletCage extends ItemAmuletBase {
             return true;
         } else
             return false;
-    }
-
-    @Override
-    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
-        if (world.isRemote) {
-            String entity = getEntityString(itemStack);
-            if (entity != null)
-                player.addChatComponentMessage(new ChatComponentText(entity));
-        }
-        return itemStack;
     }
 
     @Override
