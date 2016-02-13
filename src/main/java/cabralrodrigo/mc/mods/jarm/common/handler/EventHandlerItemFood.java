@@ -1,6 +1,6 @@
 package cabralrodrigo.mc.mods.jarm.common.handler;
 
-import cabralrodrigo.mc.mods.jarm.common.util.TextHelper;
+import cabralrodrigo.mc.mods.jarm.common.util.Translator;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
@@ -18,8 +18,8 @@ public class EventHandlerItemFood {
                 int heal = food.getHealAmount(stack);
                 float saturation = food.getSaturationModifier(stack);
 
-                event.toolTip.add(TextHelper.translate("misc", "info.food.heal", heal));
-                event.toolTip.add(TextHelper.translate("misc", "info.food.saturation", saturation));
+                event.toolTip.add(Translator.translate("misc", "info.food.heal", heal));
+                event.toolTip.add(Translator.translate("misc", "info.food.saturation", saturation));
             }
         }
     }

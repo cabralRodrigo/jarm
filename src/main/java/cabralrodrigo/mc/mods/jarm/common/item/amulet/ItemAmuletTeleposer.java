@@ -2,6 +2,7 @@ package cabralrodrigo.mc.mods.jarm.common.item.amulet;
 
 import cabralrodrigo.mc.mods.jarm.common.item.ItemAmuletBase;
 import cabralrodrigo.mc.mods.jarm.common.lib.LibItems;
+import cabralrodrigo.mc.mods.jarm.common.util.Translator;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -10,7 +11,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -38,10 +38,8 @@ public class ItemAmuletTeleposer extends ItemAmuletBase {
 
         NBTTagCompound nbtSpawner = this.getSpawnerInfo(stack);
         if (nbtSpawner != null) {
-            String entityName = StatCollector.translateToLocal("entity." + nbtSpawner.getString("EntityId") + ".name");
-
             tooltip.add(this.translateForItem("tooltip.place"));
-            tooltip.add(this.translateForItem("tooltip.mob", entityName));
+            tooltip.add(this.translateForItem("tooltip.mob", Translator.translateEntityName(nbtSpawner.getString("EntityId"))));
         } else
             tooltip.add(this.translateForItem("tooltip.pickup"));
     }

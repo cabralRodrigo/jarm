@@ -6,7 +6,7 @@ import cabralrodrigo.mc.mods.jarm.common.lib.LibItems;
 import cabralrodrigo.mc.mods.jarm.common.lib.LibMod;
 import cabralrodrigo.mc.mods.jarm.common.lib.LibVanilla;
 import cabralrodrigo.mc.mods.jarm.common.registry.util.IRegistrable;
-import cabralrodrigo.mc.mods.jarm.common.util.TextHelper;
+import cabralrodrigo.mc.mods.jarm.common.util.Translator;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -41,7 +41,7 @@ public class ItemSuperFluffyChestplate extends ItemArmor implements IRegistrable
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add(TextHelper.translate("item", this.getName(), "tooltip"));
+        tooltip.add(Translator.translate("item", this.getName(), "tooltip"));
     }
 
     @Override

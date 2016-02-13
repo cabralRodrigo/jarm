@@ -6,7 +6,7 @@ import cabralrodrigo.mc.mods.jarm.common.lib.LibItems;
 import cabralrodrigo.mc.mods.jarm.common.lib.LibMod;
 import cabralrodrigo.mc.mods.jarm.common.lib.LibVanilla;
 import cabralrodrigo.mc.mods.jarm.common.registry.util.IRegistrable;
-import cabralrodrigo.mc.mods.jarm.common.util.TextHelper;
+import cabralrodrigo.mc.mods.jarm.common.util.Translator;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -40,7 +40,7 @@ public class ItemSuperFluffyBoots extends ItemArmor implements IRegistrable {
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, playerIn, tooltip, advanced);
-        tooltip.add(TextHelper.translate("item", this.getName(), "tooltip"));
+        tooltip.add(Translator.translate("item", this.getName(), "tooltip"));
     }
 
     @Override

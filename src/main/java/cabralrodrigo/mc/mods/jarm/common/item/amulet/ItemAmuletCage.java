@@ -2,6 +2,7 @@ package cabralrodrigo.mc.mods.jarm.common.item.amulet;
 
 import cabralrodrigo.mc.mods.jarm.common.item.ItemAmuletBase;
 import cabralrodrigo.mc.mods.jarm.common.lib.LibItems;
+import cabralrodrigo.mc.mods.jarm.common.util.Translator;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
@@ -12,7 +13,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -73,9 +73,7 @@ public class ItemAmuletCage extends ItemAmuletBase {
         super.addInformation(stack, player, tooltip, advanced);
         if (hasEntity(stack)) {
             tooltip.add(this.translateForItem("tooltip.release"));
-
-            String translatedEntityName = StatCollector.translateToLocal("entity." + getEntityString(stack) + ".name");
-            tooltip.add(this.translateForItem("tooltip.entity_name", translatedEntityName));
+            tooltip.add(this.translateForItem("tooltip.entity_name", Translator.translateEntityName(getEntityString(stack))));
         } else
             tooltip.add(this.translateForItem("tooltip.pickup"));
 

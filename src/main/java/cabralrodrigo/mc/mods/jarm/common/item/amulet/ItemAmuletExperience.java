@@ -4,7 +4,7 @@ import cabralrodrigo.mc.mods.jarm.common.Jarm;
 import cabralrodrigo.mc.mods.jarm.common.lib.LibItems;
 import cabralrodrigo.mc.mods.jarm.common.lib.LibMod;
 import cabralrodrigo.mc.mods.jarm.common.registry.util.IVariantRegistrable;
-import cabralrodrigo.mc.mods.jarm.common.util.TextHelper;
+import cabralrodrigo.mc.mods.jarm.common.util.Translator;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -38,8 +38,8 @@ public class ItemAmuletExperience extends Item implements IVariantRegistrable {
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
 
-        tooltip.add(TextHelper.translate("item", this.getName(), "tooltip"));
-        tooltip.add(TextHelper.translate("item", this.getName(), "tooltip.cycle_mode"));
+        tooltip.add(Translator.translate("item", this.getName(), "tooltip"));
+        tooltip.add(Translator.translate("item", this.getName(), "tooltip.cycle_mode"));
     }
 
     @Override
@@ -50,7 +50,7 @@ public class ItemAmuletExperience extends Item implements IVariantRegistrable {
         if (modeIndex > MODES.length - 1)
             modeIndex = 0;
 
-        return name + ": " + TextHelper.translate("item", this.getName(), "tooltip.mode." + MODES[modeIndex]);
+        return name + ": " + Translator.translate("item", this.getName(), "tooltip.mode." + MODES[modeIndex]);
     }
 
     @Override

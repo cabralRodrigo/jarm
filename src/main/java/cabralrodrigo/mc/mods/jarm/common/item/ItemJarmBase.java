@@ -3,7 +3,7 @@ package cabralrodrigo.mc.mods.jarm.common.item;
 import cabralrodrigo.mc.mods.jarm.common.Jarm;
 import cabralrodrigo.mc.mods.jarm.common.lib.LibMod;
 import cabralrodrigo.mc.mods.jarm.common.registry.util.IRegistrable;
-import cabralrodrigo.mc.mods.jarm.common.util.TextHelper;
+import cabralrodrigo.mc.mods.jarm.common.util.Translator;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -64,6 +64,6 @@ public abstract class ItemJarmBase extends Item implements IRegistrable {
 
     @SideOnly(Side.CLIENT)
     protected String translateForItem(String suffix, Object... format) {
-        return TextHelper.translate("item", this.getName(), suffix, format);
+        return Translator.translate("item", this.getName(), suffix, format);
     }
 }
