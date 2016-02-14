@@ -16,7 +16,7 @@ public class ModItems {
     public static ItemAmuletEnderStorage amulet_ender_storage;
     public static ItemAmuletMagnetic amulet_magnetic;
     public static ItemSeedBag seed_bag;
-    public static ItemAmuletExperience amulet_experience;
+    // public static ItemAmuletExperience amulet_experience;
     public static ItemAmuletPotion amulet_potion;
     public static ItemAmuletTeleposer amulet_teleposer;
     public static ItemAmuletCage amulet_cage;
@@ -32,7 +32,7 @@ public class ModItems {
         Jarm.proxy.registerItem(amulet_magnetic = new ItemAmuletMagnetic());
         Jarm.proxy.registerItem(item_resource = new ItemResource());
         Jarm.proxy.registerItem(seed_bag = new ItemSeedBag());
-        Jarm.proxy.registerItem(amulet_experience = new ItemAmuletExperience());
+        //Jarm.proxy.registerItem(amulet_experience = new ItemAmuletExperience());
         Jarm.proxy.registerItem(amulet_potion = new ItemAmuletPotion());
         Jarm.proxy.registerItem(amulet_teleposer = new ItemAmuletTeleposer());
         Jarm.proxy.registerItem(amulet_cage = new ItemAmuletCage());
