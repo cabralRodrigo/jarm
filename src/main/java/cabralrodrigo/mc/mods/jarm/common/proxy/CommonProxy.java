@@ -1,10 +1,10 @@
 package cabralrodrigo.mc.mods.jarm.common.proxy;
 
 import cabralrodrigo.mc.mods.jarm.common.Jarm;
-import cabralrodrigo.mc.mods.jarm.common.inventory.container.ContainerAmuletPotion;
-import cabralrodrigo.mc.mods.jarm.common.inventory.container.ContainerAmuletStorage;
-import cabralrodrigo.mc.mods.jarm.common.inventory.container.ContainerEnderEnchantmentTable;
-import cabralrodrigo.mc.mods.jarm.common.inventory.container.ContainerSeedBag;
+import cabralrodrigo.mc.mods.jarm.common.inventory.container.amulet.ContainerAmuletPotion;
+import cabralrodrigo.mc.mods.jarm.common.inventory.container.amulet.ContainerAmuletStorage;
+import cabralrodrigo.mc.mods.jarm.common.inventory.container.misc.ContainerEnderEnchantmentTable;
+import cabralrodrigo.mc.mods.jarm.common.inventory.container.misc.ContainerSeedBag;
 import cabralrodrigo.mc.mods.jarm.common.lib.LibGui;
 import cabralrodrigo.mc.mods.jarm.common.registry.*;
 import cabralrodrigo.mc.mods.jarm.common.registry.util.IRegistrable;

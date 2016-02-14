@@ -1,7 +1,7 @@
 package cabralrodrigo.mc.mods.jarm.common.item.amulet;
 
 import cabralrodrigo.mc.mods.jarm.common.Jarm;
-import cabralrodrigo.mc.mods.jarm.common.inventory.InventoryAmuletPotion;
+import cabralrodrigo.mc.mods.jarm.common.inventory.impl.amulet.InventoryAmuletPotion;
 import cabralrodrigo.mc.mods.jarm.common.item.ItemAmuletVariantBase;
 import cabralrodrigo.mc.mods.jarm.common.lib.LibGui;
 import cabralrodrigo.mc.mods.jarm.common.lib.LibItems;

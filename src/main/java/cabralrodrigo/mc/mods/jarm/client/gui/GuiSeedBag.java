@@ -2,7 +2,7 @@ package cabralrodrigo.mc.mods.jarm.client.gui;
 
 import cabralrodrigo.mc.mods.jarm.client.lib.LibGuiTextures;
 import cabralrodrigo.mc.mods.jarm.common.inventory.container.ContainerJarmBase;
-import cabralrodrigo.mc.mods.jarm.common.inventory.container.ContainerSeedBag;
+import cabralrodrigo.mc.mods.jarm.common.inventory.container.misc.ContainerSeedBag;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.relauncher.Side;

@@ -1,6 +1,6 @@
 package cabralrodrigo.mc.mods.jarm.common.inventory.container;
 
-import cabralrodrigo.mc.mods.jarm.common.inventory.InventoryJarmBase;
+import cabralrodrigo.mc.mods.jarm.common.inventory.impl.InventoryItemBase;
 import cabralrodrigo.mc.mods.jarm.common.inventory.slot.SlotDisabled;
 import cabralrodrigo.mc.mods.jarm.common.inventory.util.IContainerSalvable;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,9 +16,9 @@ public abstract class ContainerJarmBase extends Container implements IContainerS
     protected int PLAYER_MAIN_START, PLAYER_MAIN_END;
     protected int PLAYER_BAR_START, PLAYER_BAR_END;
     protected EntityPlayer player;
-    protected InventoryJarmBase inventory;
+    protected InventoryItemBase inventory;
 
-    public ContainerJarmBase(EntityPlayer player, InventoryJarmBase inventory, int yInventoryPlayer) {
+    public ContainerJarmBase(EntityPlayer player, InventoryItemBase inventory, int yInventoryPlayer) {
         this.COLUMNS = inventory.getColumnCount();
         this.ROWS = inventory.getRowCount();
         this.CONTAINER_START = 0;
@@ -35,7 +35,7 @@ public abstract class ContainerJarmBase extends Container implements IContainerS
         this.bindPlayerInventory(yInventoryPlayer);
     }
 
-    protected static void saveInventoryOnItemStack(InventoryJarmBase inventory, ItemStack stackToSaveOn) {
+    protected static void saveInventoryOnItemStack(InventoryItemBase inventory, ItemStack stackToSaveOn) {
         if (stackToSaveOn != null) {
             NBTTagCompound nbtStack = stackToSaveOn.getTagCompound();
             if (nbtStack == null)
@@ -50,7 +50,7 @@ public abstract class ContainerJarmBase extends Container implements IContainerS
         return player;
     }
 
-    public InventoryJarmBase getJarmInventory() {
+    public InventoryItemBase getJarmInventory() {
         return inventory;
     }
 

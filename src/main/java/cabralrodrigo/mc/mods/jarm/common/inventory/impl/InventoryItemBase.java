@@ -1,4 +1,4 @@
-package cabralrodrigo.mc.mods.jarm.common.inventory;
+package cabralrodrigo.mc.mods.jarm.common.inventory.impl;
 
 import cabralrodrigo.mc.mods.jarm.common.item.ItemJarmBase;
 import cabralrodrigo.mc.mods.jarm.common.lib.LibMod;
@@ -12,7 +12,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.IChatComponent;
 
-public class InventoryJarmBase implements IInventory {
+public class InventoryItemBase implements IInventory {
 
     private final ItemStack stack;
     private ItemStack[] inventory;
@@ -22,7 +22,7 @@ public class InventoryJarmBase implements IInventory {
     private int rowCount;
     private int columnCount;
 
-    public InventoryJarmBase(ItemJarmBase itemContainer, ItemStack stackContainer, int rowCount, int columnCount) {
+    public InventoryItemBase(ItemJarmBase itemContainer, ItemStack stackContainer, int rowCount, int columnCount) {
         this.rowCount = rowCount;
         this.columnCount = columnCount;
         this.stack = stackContainer;

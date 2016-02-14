@@ -1,7 +1,7 @@
 package cabralrodrigo.mc.mods.jarm.common.item.misc;
 
 import cabralrodrigo.mc.mods.jarm.common.Jarm;
-import cabralrodrigo.mc.mods.jarm.common.inventory.InventorySeedBag;
+import cabralrodrigo.mc.mods.jarm.common.inventory.impl.misc.InventorySeedBag;
 import cabralrodrigo.mc.mods.jarm.common.item.ItemJarmBase;
 import cabralrodrigo.mc.mods.jarm.common.lib.LibGui;
 import cabralrodrigo.mc.mods.jarm.common.lib.LibItems;

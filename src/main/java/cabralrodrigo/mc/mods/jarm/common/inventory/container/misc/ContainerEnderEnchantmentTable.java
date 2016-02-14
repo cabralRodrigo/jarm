@@ -1,4 +1,4 @@
-package cabralrodrigo.mc.mods.jarm.common.inventory.container;
+package cabralrodrigo.mc.mods.jarm.common.inventory.container.misc;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;

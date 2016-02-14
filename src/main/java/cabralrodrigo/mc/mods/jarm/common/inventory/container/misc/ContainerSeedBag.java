@@ -1,6 +1,7 @@
-package cabralrodrigo.mc.mods.jarm.common.inventory.container;
+package cabralrodrigo.mc.mods.jarm.common.inventory.container.misc;
 
-import cabralrodrigo.mc.mods.jarm.common.inventory.InventorySeedBag;
+import cabralrodrigo.mc.mods.jarm.common.inventory.container.ContainerJarmBase;
+import cabralrodrigo.mc.mods.jarm.common.inventory.impl.misc.InventorySeedBag;
 import cabralrodrigo.mc.mods.jarm.common.inventory.slot.SlotWhitelist;
 import invtweaks.api.container.ChestContainer;
 import net.minecraft.entity.player.EntityPlayer;

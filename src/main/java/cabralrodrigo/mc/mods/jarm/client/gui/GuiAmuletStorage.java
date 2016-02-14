@@ -1,7 +1,7 @@
 package cabralrodrigo.mc.mods.jarm.client.gui;
 
 import cabralrodrigo.mc.mods.jarm.client.lib.LibGuiTextures;
-import cabralrodrigo.mc.mods.jarm.common.inventory.container.ContainerAmuletStorage;
+import cabralrodrigo.mc.mods.jarm.common.inventory.container.amulet.ContainerAmuletStorage;
 import cabralrodrigo.mc.mods.jarm.common.inventory.container.ContainerJarmBase;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
