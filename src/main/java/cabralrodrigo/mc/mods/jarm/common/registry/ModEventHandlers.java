@@ -1,5 +1,6 @@
 package cabralrodrigo.mc.mods.jarm.common.registry;
 
+import cabralrodrigo.mc.mods.jarm.common.crafting.explosion.ExplosionCraftingManager;
 import cabralrodrigo.mc.mods.jarm.common.handler.EventHandlerItemFood;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -13,5 +14,6 @@ public final class ModEventHandlers {
         MinecraftForge.EVENT_BUS.register(ModItems.amulet_potion);
         MinecraftForge.EVENT_BUS.register(new ModRecipes());
         MinecraftForge.EVENT_BUS.register(new EventHandlerItemFood());
+        MinecraftForge.EVENT_BUS.register(ExplosionCraftingManager.instance());
     }
 }
