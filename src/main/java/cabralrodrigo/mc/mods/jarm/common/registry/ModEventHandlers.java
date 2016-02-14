@@ -9,7 +9,6 @@ public final class ModEventHandlers {
         MinecraftForge.EVENT_BUS.register(ModItems.orb_of_sin);
         MinecraftForge.EVENT_BUS.register(ModItems.super_fluffy_boots);
         MinecraftForge.EVENT_BUS.register(ModItems.super_fluffy_chestplate);
-        MinecraftForge.EVENT_BUS.register(ModItems.amulet_tepeport);
         MinecraftForge.EVENT_BUS.register(ModItems.amulet_magnetic);
         MinecraftForge.EVENT_BUS.register(ModItems.amulet_potion);
         MinecraftForge.EVENT_BUS.register(new ModRecipes());

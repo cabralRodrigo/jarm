@@ -1,20 +1,14 @@
 package cabralrodrigo.mc.mods.jarm.common.registry;
 
+import cabralrodrigo.mc.mods.jarm.common.crafting.explosion.ExplosionCraftingManager;
+import cabralrodrigo.mc.mods.jarm.common.crafting.explosion.ExplosionRecipe;
 import cabralrodrigo.mc.mods.jarm.common.item.misc.ItemResource;
-import cabralrodrigo.mc.mods.jarm.common.util.ItemHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.util.BlockPos;
-import net.minecraftforge.event.world.ExplosionEvent;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
@@ -120,35 +114,35 @@ public class ModRecipes {
         }));
 
         FurnaceRecipes.instance().addSmeltingRecipeForBlock(Blocks.stone, ModItems.item_resource.createItemStack(ItemResource.ResourceType.STONE_PLATE), 0F);
-    }
 
-    @SubscribeEvent
-    public void onExplosion(ExplosionEvent.Detonate event) {
-        if (FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER) {
-            int stackSizeToSpawn = 0;
+        ExplosionCraftingManager.instance().addRecipe(new ExplosionRecipe()
+                .addInputBlocks(Blocks.iron_block)
+                .addOutputItemStack(new ItemStack(ModItems.item_resource, 36, ItemResource.ResourceType.IRON_SPIKES.getDamage()))
+        );
 
-            for (Entity entity : event.getAffectedEntities())
-                if (entity instanceof EntityItem) {
-                    ItemStack stack = ((EntityItem) entity).getEntityItem();
-                    if (stack != null) {
-                        if (stack.getItem() == Items.iron_ingot) {
-                            stackSizeToSpawn += stack.stackSize * 4;
-                            entity.setDead();
-                        } else if (stack.getItem() == Item.getItemFromBlock(Blocks.iron_block)) {
-                            stackSizeToSpawn += stack.stackSize * 9;
-                            entity.setDead();
-                        }
-                    }
-                }
+        ExplosionCraftingManager.instance().addRecipe(new ExplosionRecipe()
+                .addInputBlocks(Blocks.iron_ore)
+                .addOutputItemStack(new ItemStack(ModItems.item_resource, 4, ItemResource.ResourceType.IRON_SPIKES.getDamage()))
+        );
 
-            while (stackSizeToSpawn > 0) {
-                ItemStack stack = ModItems.item_resource.createItemStack(ItemResource.ResourceType.IRON_SPIKES);
-                stack.stackSize = Math.min(stack.getMaxStackSize(), stackSizeToSpawn);
+        ExplosionCraftingManager.instance().addRecipe(new ExplosionRecipe()
+                .addInputItems(ItemBlock.getItemFromBlock(Blocks.iron_ore))
+                .addOutputItemStack(new ItemStack(ModItems.item_resource, 4, ItemResource.ResourceType.IRON_SPIKES.getDamage()))
+        );
 
-                stackSizeToSpawn -= stack.stackSize;
-                ItemHelper.spawnItemStack(event.world, new BlockPos(event.explosion.getPosition()), stack);
-            }
-        }
+        ExplosionCraftingManager.instance().addRecipe(new ExplosionRecipe()
+                .addInputItems(ItemBlock.getItemFromBlock(Blocks.iron_block))
+                .addOutputItemStack(new ItemStack(ModItems.item_resource, 36, ItemResource.ResourceType.IRON_SPIKES.getDamage()))
+        );
 
+        ExplosionCraftingManager.instance().addRecipe(new ExplosionRecipe()
+                .addInputItems(Items.iron_ingot)
+                .addOutputItemStack(new ItemStack(ModItems.item_resource, 4, ItemResource.ResourceType.IRON_SPIKES.getDamage()))
+        );
+
+        ExplosionCraftingManager.instance().addRecipe(new ExplosionRecipe()
+                .addInputItems(ModItems.amulet_tepeport)
+                .addOutputItems(ModItems.amulet_tepeport)
+        );
     }
 }

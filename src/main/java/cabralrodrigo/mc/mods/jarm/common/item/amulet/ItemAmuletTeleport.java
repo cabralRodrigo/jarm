@@ -2,10 +2,8 @@ package cabralrodrigo.mc.mods.jarm.common.item.amulet;
 
 import cabralrodrigo.mc.mods.jarm.common.item.ItemAmuletBase;
 import cabralrodrigo.mc.mods.jarm.common.lib.LibItems;
-import cabralrodrigo.mc.mods.jarm.common.util.ItemHelper;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -16,9 +14,6 @@ import net.minecraft.world.Teleporter;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.event.world.ExplosionEvent;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -62,7 +57,7 @@ public class ItemAmuletTeleport extends ItemAmuletBase {
                 BlockPos pos = info.getLocation();
 
                 if (player.isRiding())
-                    player.mountEntity((Entity) null);
+                    player.mountEntity(null);
 
                 if (player.dimension != info.getDimensionID()) {
                     ServerConfigurationManager manager = ((EntityPlayerMP) player).mcServer.getConfigurationManager();
@@ -75,29 +70,6 @@ public class ItemAmuletTeleport extends ItemAmuletBase {
             }
         }
         return itemStack;
-    }
-
-    @SubscribeEvent
-    public void onExplosion(ExplosionEvent.Detonate event) {
-        if (FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER)
-            for (Entity entity : event.getAffectedEntities())
-                if (entity instanceof EntityItem) {
-                    ItemStack stack = ((EntityItem) entity).getEntityItem();
-                    if (stack != null && stack.getItem() == this) {
-                        AmuletInfo info = new AmuletInfo(stack);
-                        if (info.isLocationSet()) {
-                            NBTTagCompound compound = (NBTTagCompound) stack.getTagCompound().copy();
-                            if (compound.hasKey("amulet_info"))
-                                compound.removeTag("amulet_info");
-
-                            ItemStack newStack = new ItemStack(this, 1);
-                            newStack.setTagCompound(compound);
-                            ItemHelper.spawnItemStack(event.world, new BlockPos(event.explosion.getPosition()), newStack);
-
-                            entity.setDead();
-                        }
-                    }
-                }
     }
 
     private class AmuletInfo {
@@ -124,7 +96,7 @@ public class ItemAmuletTeleport extends ItemAmuletBase {
                 compound = new NBTTagCompound();
 
             compound.setTag("amulet_info", info);
-            stack.setTagCompound(compound);
+            this.stack.setTagCompound(compound);
         }
 
         public boolean isLocationSet() {

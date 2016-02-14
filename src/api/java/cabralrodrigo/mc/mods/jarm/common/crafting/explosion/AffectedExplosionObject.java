@@ -89,7 +89,7 @@ public class AffectedExplosionObject {
                         if (stack.getItem() != stackValue.getItem())
                             continue;
 
-                        if (stack.getItemDamage() != OreDictionary.WILDCARD_VALUE || stack.getItemDamage() != stackValue.getItemDamage())
+                        if (stack.getItemDamage() == OreDictionary.WILDCARD_VALUE || stack.getItemDamage() != stackValue.getItemDamage())
                             continue;
 
                         if (stack.getTagCompound() != null && stack.getTagCompound() != null)
