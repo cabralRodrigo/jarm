@@ -1,9 +1,6 @@
 package cabralrodrigo.mc.mods.jarm.client.proxy;
 
-import cabralrodrigo.mc.mods.jarm.client.gui.GuiAmuletPotion;
-import cabralrodrigo.mc.mods.jarm.client.gui.GuiAmuletStorage;
-import cabralrodrigo.mc.mods.jarm.client.gui.GuiEnderEnchantmentTable;
-import cabralrodrigo.mc.mods.jarm.client.gui.GuiSeedBag;
+import cabralrodrigo.mc.mods.jarm.client.gui.*;
 import cabralrodrigo.mc.mods.jarm.client.registry.ModRenderers;
 import cabralrodrigo.mc.mods.jarm.client.util.InventoryRenderHelper;
 import cabralrodrigo.mc.mods.jarm.common.lib.LibGui;
@@ -11,11 +8,13 @@ import cabralrodrigo.mc.mods.jarm.common.lib.LibMod;
 import cabralrodrigo.mc.mods.jarm.common.proxy.CommonProxy;
 import cabralrodrigo.mc.mods.jarm.common.registry.util.IRegistrable;
 import cabralrodrigo.mc.mods.jarm.common.registry.util.IVariantRegistrable;
+import cabralrodrigo.mc.mods.jarm.common.tileentity.TileEntityAmuletStamper;
 import net.minecraft.block.Block;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -58,6 +57,8 @@ public class ClientProxy extends CommonProxy {
                     return new GuiSeedBag(player);
                 case LibGui.AMULET_POTION:
                     return new GuiAmuletPotion(player);
+                case LibGui.AMULET_STAMPER:
+                    return new GuiAmuletStamper(player, (TileEntityAmuletStamper) world.getTileEntity(new BlockPos(x, y, z)));
             }
 
         return null;

@@ -11,7 +11,6 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -95,14 +94,7 @@ public class ItemAmuletPotion extends ItemAmuletVariantBase {
                         }
                     }
                 }
-
-                NBTTagCompound nbt = stackAmulet.getTagCompound();
-                if (nbt == null)
-                    nbt = new NBTTagCompound();
-
-                inventoryAmulet.writeToNBT(nbt);
-                stackAmulet.setTagCompound(nbt);
-
+                inventoryAmulet.serializeIntoItemStack(stackAmulet);
                 event.player.inventory.setInventorySlotContents(slot, stackAmulet);
             }
         }

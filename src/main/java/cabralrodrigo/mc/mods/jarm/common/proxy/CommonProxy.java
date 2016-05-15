@@ -3,14 +3,19 @@ package cabralrodrigo.mc.mods.jarm.common.proxy;
 import cabralrodrigo.mc.mods.jarm.common.Jarm;
 import cabralrodrigo.mc.mods.jarm.common.inventory.container.amulet.ContainerAmuletPotion;
 import cabralrodrigo.mc.mods.jarm.common.inventory.container.amulet.ContainerAmuletStorage;
+import cabralrodrigo.mc.mods.jarm.common.inventory.container.misc.ContainerAmuletStamper;
 import cabralrodrigo.mc.mods.jarm.common.inventory.container.misc.ContainerEnderEnchantmentTable;
 import cabralrodrigo.mc.mods.jarm.common.inventory.container.misc.ContainerSeedBag;
 import cabralrodrigo.mc.mods.jarm.common.lib.LibGui;
 import cabralrodrigo.mc.mods.jarm.common.registry.*;
 import cabralrodrigo.mc.mods.jarm.common.registry.util.IRegistrable;
+import cabralrodrigo.mc.mods.jarm.common.registry.util.ITileEntityBlock;
+import cabralrodrigo.mc.mods.jarm.common.tileentity.TileEntityAmuletStamper;
 import net.minecraft.block.Block;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -46,6 +51,8 @@ public class CommonProxy implements IProxy {
     @Override
     public <T extends Block & IRegistrable> void registerBlock(T block) {
         GameRegistry.registerBlock(block, block.getName());
+        if (block instanceof ITileEntityBlock)
+            GameRegistry.registerTileEntity(((ITileEntityBlock)block).getTileEntityClass(), block.getName());
     }
 
     @Override
@@ -59,6 +66,8 @@ public class CommonProxy implements IProxy {
                 return new ContainerSeedBag(player);
             case LibGui.AMULET_POTION:
                 return new ContainerAmuletPotion(player);
+            case LibGui.AMULET_STAMPER:
+                return new ContainerAmuletStamper(player, (TileEntityAmuletStamper) world.getTileEntity(new BlockPos(x, y, z)));
         }
 
         return null;

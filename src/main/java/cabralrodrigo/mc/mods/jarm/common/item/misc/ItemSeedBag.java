@@ -9,7 +9,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
@@ -57,12 +56,7 @@ public class ItemSeedBag extends ItemJarmBase {
                         }
                     }
 
-                NBTTagCompound nbt = stack.getTagCompound();
-                if (nbt == null)
-                    nbt = new NBTTagCompound();
-
-                inventory.writeToNBT(nbt);
-                stack.setTagCompound(nbt);
+                inventory.serializeIntoItemStack(stack);
             }
             return true;
         } else

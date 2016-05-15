@@ -19,6 +19,9 @@ item.jarm:amulet_cage.tooltip.pickup=$b$oRight-click$r$7 to pickup a mob
 
 tile.jarm:ender_enchantment_table.name=[WIP] Ender Enchantment Table
 
+tile.jarm:amulet_stamper=[WIP] Amulet Stamper
+container.jarm:amulet_stamper.name=Amulet Stamper
+
 item.jarm:amulet_potion.name=Potion Amulet
 item.jarm:amulet_potion.tooltip=Now you don't have to drink no more
 item.jarm:amulet_potion.tooltip.use=$b$oSneak + right-click$r$7 to fill the amulet with potions

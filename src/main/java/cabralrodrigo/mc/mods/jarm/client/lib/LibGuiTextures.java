@@ -13,6 +13,7 @@ public final class LibGuiTextures {
     public static final ResourceLocation GUI_SEED_BAG = getResourceLocation(LibItems.SEED_BAG);
     public static final ResourceLocation GUI_ENDER_ENCHANTMENT_TABLE = getResourceLocation(LibBlocks.ENDER_ENCHANTMENT_TABLE);
     public static final ResourceLocation GUI_AMULET_POTION = getResourceLocation(LibItems.AMULET_POTION);
+    public static final ResourceLocation GUI_AMULET_STAMPER = getResourceLocation(LibBlocks.AMULET_STAMPER);
 
     private static ResourceLocation getResourceLocation(String name) {
         return new ResourceLocation(LibMod.MOD_ID, String.format("textures/gui/%s.png", name));

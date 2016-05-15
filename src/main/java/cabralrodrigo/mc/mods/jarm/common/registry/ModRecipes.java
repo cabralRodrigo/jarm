@@ -2,6 +2,8 @@ package cabralrodrigo.mc.mods.jarm.common.registry;
 
 import cabralrodrigo.mc.mods.jarm.common.crafting.explosion.ExplosionCraftingManager;
 import cabralrodrigo.mc.mods.jarm.common.crafting.explosion.ExplosionRecipe;
+import cabralrodrigo.mc.mods.jarm.common.crafting.stamper.StamperCraftingManager;
+import cabralrodrigo.mc.mods.jarm.common.crafting.stamper.StamperRecipe;
 import cabralrodrigo.mc.mods.jarm.common.item.misc.ItemResource;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -144,5 +146,12 @@ public class ModRecipes {
                 .addInputItems(ModItems.amulet_tepeport)
                 .addOutputItems(ModItems.amulet_tepeport)
         );
+
+        StamperCraftingManager.instance().addRecipe(new StamperRecipe(new ItemStack(ModItems.amulet_storage), 30,
+                ModItems.item_resource.createItemStack(ItemResource.ResourceType.STONE_PLATE), new Object[]{
+                Blocks.diamond_block,
+                Blocks.chest,
+                Blocks.gold_block
+        }));
     }
 }
