@@ -18,7 +18,8 @@ import net.minecraft.world.World;
 public class BlockEnderEnchantmentTable extends BlockEnchantmentTable implements IRegistrable {
     public BlockEnderEnchantmentTable() {
         super();
-        this.setUnlocalizedName(LibMod.bindModId(':', LibBlocks.ENDER_ENCHANTMENT_TABLE));
+        this.setUnlocalizedName(LibMod.bindModId(':', this.getName()));
+        this.setRegistryName(LibMod.MOD_ID, this.getName());
         this.setCreativeTab(Jarm.creativeTab);
     }
 

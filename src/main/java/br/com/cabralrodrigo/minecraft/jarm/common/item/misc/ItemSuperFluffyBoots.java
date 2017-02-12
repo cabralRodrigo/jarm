@@ -29,6 +29,7 @@ public class ItemSuperFluffyBoots extends ItemArmor implements IRegistrable {
     public ItemSuperFluffyBoots() {
         super(LibVanilla.ARMOR_MATERIAL_FLUFFY, 1, EntityEquipmentSlot.FEET);
         this.setUnlocalizedName(LibMod.bindModId(':', this.getName()));
+        this.setRegistryName(LibMod.MOD_ID, this.getName());
         this.setCreativeTab(Jarm.creativeTab);
         this.setMaxDamage(-1);
         this.setNoRepair();

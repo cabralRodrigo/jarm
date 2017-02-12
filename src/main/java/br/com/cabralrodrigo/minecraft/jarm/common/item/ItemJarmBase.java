@@ -25,6 +25,7 @@ public abstract class ItemJarmBase extends Item implements IRegistrable {
         this.setHasDefaultTooltip(true);
         this.setDefaultDisplayDamage(0);
         this.setUnlocalizedName(LibMod.bindModId(':', this.getName()));
+        this.setRegistryName(LibMod.MOD_ID, this.getName());
         this.setCreativeTab(Jarm.creativeTab);
     }
 

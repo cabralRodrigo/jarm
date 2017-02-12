@@ -24,6 +24,7 @@ public class BlockAmuletStamper extends Block implements ITileEntityBlock, IRegi
     public BlockAmuletStamper() {
         super(Material.ROCK, MapColor.GRAY);
         this.setUnlocalizedName(LibMod.bindModId(':', this.getName()));
+        this.setRegistryName(LibMod.MOD_ID, this.getName());
         this.setCreativeTab(Jarm.creativeTab);
     }
 

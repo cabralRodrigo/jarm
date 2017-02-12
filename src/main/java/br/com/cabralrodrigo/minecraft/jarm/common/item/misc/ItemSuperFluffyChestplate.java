@@ -30,6 +30,7 @@ public class ItemSuperFluffyChestplate extends ItemArmor implements IRegistrable
     public ItemSuperFluffyChestplate() {
         super(LibVanilla.ARMOR_MATERIAL_FLUFFY, 1, EntityEquipmentSlot.CHEST);
         this.setUnlocalizedName(LibMod.bindModId(':', this.getName()));
+        this.setRegistryName(LibMod.MOD_ID, this.getName());
         this.setCreativeTab(Jarm.creativeTab);
         this.setMaxDamage(-1);
         this.setNoRepair();
