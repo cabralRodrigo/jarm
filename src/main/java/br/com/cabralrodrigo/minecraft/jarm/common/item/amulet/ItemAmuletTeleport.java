@@ -62,8 +62,8 @@ public class ItemAmuletTeleport extends ItemAmuletBase {
 
                 if (player.dimension != info.getDimensionID())
                     player.changeDimension(info.getDimensionID());
-                else
-                    player.setPositionAndUpdate(pos.getX() + .5F, pos.getY(), pos.getZ() + .5F);
+
+                player.setPositionAndUpdate(pos.getX() + .5F, pos.getY(), pos.getZ() + .5F);
             } else {
                 info.setLocation(player.dimension, new BlockPos(player.posX, player.posY, player.posZ));
                 info.save();
