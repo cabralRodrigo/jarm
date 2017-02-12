@@ -46,7 +46,7 @@ public class InventoryRenderHelper {
      * @param name - Name of the model JSON
      */
     public void itemRender(Item item, int meta, String name) {
-        ResourceLocation resName = new ResourceLocation(domain + name);
+        ModelResourceLocation resName = new ModelResourceLocation(domain + name);
 
         ModelBakery.registerItemVariants(item, resName);
         ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(resName, "inventory"));

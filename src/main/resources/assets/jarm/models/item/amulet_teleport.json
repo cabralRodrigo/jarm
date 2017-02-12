@@ -1,5 +1,5 @@
 {
-  "parent": "jarm:item/item_model_base",
+  "parent": "minecraft:item/generated",
   "textures": {
     "layer0": "jarm:items/amulet_teleport"
   }
