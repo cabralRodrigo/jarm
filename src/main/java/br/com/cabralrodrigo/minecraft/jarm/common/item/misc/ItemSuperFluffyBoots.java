@@ -21,7 +21,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
-import java.util.Arrays;
 import java.util.List;
 
 public class ItemSuperFluffyBoots extends ItemArmor implements IRegistrable {
@@ -63,9 +62,10 @@ public class ItemSuperFluffyBoots extends ItemArmor implements IRegistrable {
     private boolean isEntityWearingBoots(EntityLivingBase entity) {
         if (entity != null && entity instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) entity;
-            ItemStack boots = (ItemStack) Arrays.asList(player.getArmorInventoryList()).toArray()[LibVanilla.ArmorSlots.BOOTS];
-            if (boots != null && boots.getItem() == this)
-                return true;
+
+            for (ItemStack stack : player.getArmorInventoryList())
+                if (stack != null && !stack.isEmpty() && stack.getItem() == this)
+                    return true;
         }
 
         return false;

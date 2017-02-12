@@ -21,7 +21,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ItemSuperFluffyChestplate extends ItemArmor implements IRegistrable {
@@ -98,10 +97,10 @@ public class ItemSuperFluffyChestplate extends ItemArmor implements IRegistrable
     }
 
     private boolean isEntityWearingChestplate(EntityPlayer player) {
-        ItemStack chestplate = (ItemStack) Arrays.asList(player.getArmorInventoryList()).toArray()[LibVanilla.ArmorSlots.CHEST];
-        if (chestplate != null && chestplate.getItem() == this)
-            return true;
-        else
-            return false;
+        for (ItemStack stack : player.getArmorInventoryList())
+            if (stack != null && !stack.isEmpty() && stack.getItem() == this)
+                return true;
+
+        return false;
     }
 }
