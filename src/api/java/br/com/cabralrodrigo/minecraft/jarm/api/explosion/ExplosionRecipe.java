@@ -1,9 +1,9 @@
 package br.com.cabralrodrigo.minecraft.jarm.api.explosion;
 
-import br.com.cabralrodrigo.minecraft.jarm.api.util.ItemHelper;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -110,12 +110,14 @@ public class ExplosionRecipe {
                         exception.printStackTrace();
                     }
                 } else if (object.isItemStack()) {
-                    ItemHelper.spawnItemStack(event.getWorld(), new BlockPos(event.getExplosion().getPosition()), ((ItemStack) object.getValue()).copy());
+                    BlockPos pos = new BlockPos(event.getExplosion().getPosition());
+                    InventoryHelper.spawnItemStack(event.getWorld(), pos.getX(), pos.getY(), pos.getZ(), ((ItemStack) object.getValue()).copy());
                 } else {
                     Item itemToSpawn = object.isItem() ? (Item) object.getValue() : ItemBlock.getItemFromBlock((Block) object.getValue());
                     ItemStack stackToSpawn = new ItemStack(itemToSpawn);
+                    BlockPos pos = new BlockPos(event.getExplosion().getPosition());
 
-                    ItemHelper.spawnItemStack(event.getWorld(), new BlockPos(event.getExplosion().getPosition()), stackToSpawn);
+                    InventoryHelper.spawnItemStack(event.getWorld(), pos.getX(), pos.getY(), pos.getZ(), stackToSpawn);
                 }
             }
             return true;

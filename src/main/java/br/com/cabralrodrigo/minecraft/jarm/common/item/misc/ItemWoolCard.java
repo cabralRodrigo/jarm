@@ -2,13 +2,13 @@ package br.com.cabralrodrigo.minecraft.jarm.common.item.misc;
 
 import br.com.cabralrodrigo.minecraft.jarm.common.item.ItemJarmBase;
 import br.com.cabralrodrigo.minecraft.jarm.common.lib.LibItems;
-import br.com.cabralrodrigo.minecraft.jarm.api.util.ItemHelper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -48,7 +48,7 @@ public class ItemWoolCard extends ItemJarmBase {
             if (state.getBlock() == Blocks.WOOL) {
                 if (!world.isRemote) {
                     world.setBlockToAir(pos);
-                    ItemHelper.spawnItemStack(world, pos, new ItemStack(Items.STRING, 4));
+                    InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Items.STRING, 4));
                 } else
 
                     player.playSound(SoundEvents.BLOCK_CLOTH_BREAK, 1F, rand.nextFloat() * (1F - .2F) + .2F);

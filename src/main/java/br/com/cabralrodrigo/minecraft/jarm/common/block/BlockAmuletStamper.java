@@ -7,12 +7,12 @@ import br.com.cabralrodrigo.minecraft.jarm.common.lib.LibMod;
 import br.com.cabralrodrigo.minecraft.jarm.common.registry.util.IRegistrable;
 import br.com.cabralrodrigo.minecraft.jarm.common.registry.util.ITileEntityBlock;
 import br.com.cabralrodrigo.minecraft.jarm.common.tileentity.TileEntityAmuletStamper;
-import br.com.cabralrodrigo.minecraft.jarm.api.util.ItemHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -56,9 +56,7 @@ public class BlockAmuletStamper extends Block implements ITileEntityBlock, IRegi
         TileEntityAmuletStamper stamper = (TileEntityAmuletStamper) world.getTileEntity(pos);
 
         if (stamper != null)
-            for (int i = 0; i < stamper.getSizeInventory(); i++)
-                if (stamper.getStackInSlot(i) != null)
-                    ItemHelper.spawnItemStack(world, pos, stamper.getStackInSlot(i));
+            InventoryHelper.dropInventoryItems(world, pos, stamper);
 
         super.breakBlock(world, pos, state);
     }
