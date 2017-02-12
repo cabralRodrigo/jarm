@@ -10,6 +10,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -58,18 +63,19 @@ public class ItemAmuletExperience extends Item implements IVariantRegistrable {
         return stack.getItemDamage() == 1 /* Absorb */;
     }
 
+
     @Override
-    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         if (!world.isRemote) {
             if (player.isSneaking())
-                this.cycleMode(itemStack);
+                this.cycleMode(player.getHeldItem(hand));
 
-            player.addChatComponentMessage(new ChatComponentText("Total: " + player.experienceTotal));
-            player.addChatComponentMessage(new ChatComponentText("Amount: " + player.experience));
-            player.addChatComponentMessage(new ChatComponentText("Amount to level: " + xpBarCap(player.experienceTotal)));
+            player.sendStatusMessage(new TextComponentString("Total: " + player.experienceTotal), false);
+            player.sendStatusMessage(new TextComponentString("Amount: " + player.experience), false);
+            player.sendStatusMessage(new TextComponentString("Amount to level: " + xpBarCap(player.experienceTotal)), false);
         }
 
-        return itemStack;
+        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
     }
 
     private int xpBarCap(int level) {
@@ -94,7 +100,7 @@ public class ItemAmuletExperience extends Item implements IVariantRegistrable {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
+    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems) {
         subItems.add(new ItemStack(itemIn, 1, 1/* Absorb */));
     }
 
@@ -122,7 +128,7 @@ public class ItemAmuletExperience extends Item implements IVariantRegistrable {
 
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (event.phase == Phase.END && !event.player.worldObj.isRemote) {
+        if (event.phase == Phase.END && !event.player.world.isRemote) {
 
         }
     }

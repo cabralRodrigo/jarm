@@ -4,7 +4,7 @@ import br.com.cabralrodrigo.minecraft.jarm.common.lib.LibMod;
 import br.com.cabralrodrigo.minecraft.jarm.common.proxy.IProxy;
 import br.com.cabralrodrigo.minecraft.jarm.common.registry.ModItems;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -27,8 +27,8 @@ public class Jarm {
     public static CreativeTabs creativeTab = new CreativeTabs(LibMod.MOD_ID) {
         @Override
         @SideOnly(Side.CLIENT)
-        public Item getTabIconItem() {
-            return ModItems.amulet_storage;
+        public ItemStack getTabIconItem() {
+            return new ItemStack(ModItems.amulet_storage);
         }
     };
 

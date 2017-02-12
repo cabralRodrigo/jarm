@@ -4,14 +4,15 @@ import br.com.cabralrodrigo.minecraft.jarm.common.inventory.container.ContainerJ
 import br.com.cabralrodrigo.minecraft.jarm.common.inventory.impl.misc.InventorySeedBag;
 import br.com.cabralrodrigo.minecraft.jarm.common.inventory.slot.SlotWhitelist;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.EnumHand;
+import net.minecraftforge.common.IPlantable;
 
-@ChestContainer(showButtons = true, rowSize = 9, isLargeChest = false)
 public class ContainerSeedBag extends ContainerJarmBase {
 
     private int seedBagSlot;
 
-    public ContainerSeedBag(EntityPlayer player) {
-        super(player, new InventorySeedBag(player.getCurrentEquippedItem()), 86/*86*/);
+    public ContainerSeedBag(EntityPlayer player, EnumHand hand) {
+        super(player, new InventorySeedBag(player.getHeldItem(hand)), 86/*86*/);
         this.seedBagSlot = player.inventory.currentItem;
     }
 
@@ -23,7 +24,7 @@ public class ContainerSeedBag extends ContainerJarmBase {
     @Override
     public void onContainerClosed(EntityPlayer player) {
         super.onContainerClosed(player);
-        if (!player.worldObj.isRemote)
+        if (!player.world.isRemote)
             this.save();
     }
 
@@ -41,6 +42,6 @@ public class ContainerSeedBag extends ContainerJarmBase {
 
     @Override
     public void save() {
-        saveInventoryOnItemStack(this.inventory, player.inventory.mainInventory[this.seedBagSlot]);
+        saveInventoryOnItemStack(this.inventory, player.inventory.mainInventory.get(this.seedBagSlot));
     }
 }

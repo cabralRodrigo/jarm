@@ -4,10 +4,8 @@ import br.com.cabralrodrigo.minecraft.jarm.common.registry.util.IVariantRegistra
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.util.NonNullList;
 
-import java.util.List;
 import java.util.Map;
 
 public abstract class ItemJarmVariantBase extends ItemJarmBase implements IVariantRegistrable {
@@ -25,8 +23,7 @@ public abstract class ItemJarmVariantBase extends ItemJarmBase implements IVaria
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
+    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems) {
         if (this.hasSubtypes)
             for (Map.Entry<String, Integer> variant : this.getVariants().entrySet()) {
                 subItems.add(new ItemStack(this, 1, variant.getValue()));

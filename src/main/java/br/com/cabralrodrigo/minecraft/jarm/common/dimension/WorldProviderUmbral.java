@@ -1,32 +1,13 @@
 package br.com.cabralrodrigo.minecraft.jarm.common.dimension;
 
 import br.com.cabralrodrigo.minecraft.jarm.common.lib.LibDimensions;
+import br.com.cabralrodrigo.minecraft.jarm.common.lib.LibVanilla;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.chunk.IChunkProvider;
 
 public class WorldProviderUmbral extends WorldProvider {
-
-    @Override
-    protected void registerWorldChunkManager() {
-        this.worldChunkMgr = new WorldChunkManagerHell(BiomeGenBase.desertHills, 0.8F);
-        this.dimensionId = LibDimensions.UMBRAL_ID;
-    }
-
-    @Override
-    public IChunkProvider createChunkGenerator() {
-        return new ChunkProviderUmbral(this.worldObj);
-    }
-
-    @Override
-    public String getDimensionName() {
-        return "Umbral";
-    }
-
-    @Override
-    public String getInternalNameSuffix() {
-        return "UB";
-    }
 
     @Override
     public boolean canRespawnHere() {
@@ -36,6 +17,11 @@ public class WorldProviderUmbral extends WorldProvider {
     @Override
     public BlockPos getSpawnPoint() {
         return new BlockPos(7.5F, 65, 7.5F);
+    }
+
+    @Override
+    public DimensionType getDimensionType() {
+        return LibVanilla.DIMENSION_TYPE_UMBRAL;
     }
 
     @Override

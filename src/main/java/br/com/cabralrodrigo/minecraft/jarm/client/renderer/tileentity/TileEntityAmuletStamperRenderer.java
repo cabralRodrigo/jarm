@@ -33,7 +33,7 @@ public class TileEntityAmuletStamperRenderer extends TileEntitySpecialRenderer<T
             GlStateManager.rotate(90, 1, 0, 0);
 
             EntityItem entityitem = new EntityItem(world, 0.0D, 0.0D, 0.0D, new ItemStack(stack.getItem(), 1, stack.getItemDamage()));
-            entityitem.getEntityItem().stackSize = 1;
+            entityitem.getEntityItem().setCount(1);
 
             GlStateManager.pushMatrix();
             GlStateManager.disableLighting();

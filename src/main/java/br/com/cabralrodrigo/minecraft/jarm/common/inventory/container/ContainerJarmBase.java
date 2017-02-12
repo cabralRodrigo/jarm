@@ -5,6 +5,7 @@ import br.com.cabralrodrigo.minecraft.jarm.common.inventory.slot.SlotDisabled;
 import br.com.cabralrodrigo.minecraft.jarm.common.inventory.util.IContainerSalvable;
 import br.com.cabralrodrigo.minecraft.jarm.common.util.IInventoryNBT;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -78,7 +79,7 @@ public abstract class ContainerJarmBase extends Container implements IContainerS
                 return null;
             }
 
-            if (itemstack1.stackSize == 0) {
+            if (itemstack1.getCount() == 0) {
                 slot.putStack(null);
                 return null;
             }
@@ -90,11 +91,11 @@ public abstract class ContainerJarmBase extends Container implements IContainerS
     }
 
     @Override
-    public ItemStack slotClick(int targetSlot, int eventID, int flag, EntityPlayer player) {
-        if (targetSlot == this.getDisabledSlotOnHotBar() + this.PLAYER_BAR_START || (flag == 2 && eventID == this.getDisabledSlotOnHotBar()))
+    public ItemStack slotClick(int targetSlot, int eventID, ClickType clickType, EntityPlayer player) {
+        if (targetSlot == this.getDisabledSlotOnHotBar() + this.PLAYER_BAR_START || (clickType == ClickType.SWAP && eventID == this.getDisabledSlotOnHotBar()))
             return null;
 
-        return super.slotClick(targetSlot, eventID, flag, player);
+        return super.slotClick(targetSlot, eventID, clickType, player);
     }
 
     protected abstract void bindContainerInventory();

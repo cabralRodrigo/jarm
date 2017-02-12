@@ -4,13 +4,13 @@ import br.com.cabralrodrigo.minecraft.jarm.common.inventory.container.ContainerJ
 import br.com.cabralrodrigo.minecraft.jarm.common.inventory.impl.amulet.InventoryAmuletPotion;
 import br.com.cabralrodrigo.minecraft.jarm.common.inventory.slot.SlotPotion;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.EnumHand;
 
-@ChestContainer(showButtons = true, rowSize = 9, isLargeChest = false)
 public class ContainerAmuletPotion extends ContainerJarmBase {
     private int amuletSlot;
 
-    public ContainerAmuletPotion(EntityPlayer player) {
-        super(player, new InventoryAmuletPotion(player.getCurrentEquippedItem()), 86);
+    public ContainerAmuletPotion(EntityPlayer player, EnumHand hand) {
+        super(player, new InventoryAmuletPotion(player.getHeldItem(hand)), 86);
         this.amuletSlot = player.inventory.currentItem;
     }
 
@@ -22,7 +22,7 @@ public class ContainerAmuletPotion extends ContainerJarmBase {
     @Override
     public void onContainerClosed(EntityPlayer player) {
         super.onContainerClosed(player);
-        if (!player.worldObj.isRemote)
+        if (!player.world.isRemote)
             this.save();
     }
 
@@ -31,7 +31,6 @@ public class ContainerAmuletPotion extends ContainerJarmBase {
         for (int row = 0; row < ROWS; ++row)
             for (int column = 0; column < COLUMNS; column++)
                 this.addSlotToContainer(new SlotPotion(this, this.inventory, column + row * 9, 8 + column * 18, 18 + row * 18, false));
-
     }
 
     @Override
@@ -41,6 +40,6 @@ public class ContainerAmuletPotion extends ContainerJarmBase {
 
     @Override
     public void save() {
-        saveInventoryOnItemStack(this.inventory, player.inventory.mainInventory[this.amuletSlot]);
+        saveInventoryOnItemStack(this.inventory, player.inventory.mainInventory.get(this.amuletSlot));
     }
 }

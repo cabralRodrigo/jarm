@@ -1,10 +1,10 @@
 package br.com.cabralrodrigo.minecraft.jarm.common.registry;
 
 import br.com.cabralrodrigo.minecraft.jarm.common.item.misc.ItemResource;
-import cabralrodrigo.mc.mods.jarm.api.crafting.explosion.ExplosionCraftingManager;
-import cabralrodrigo.mc.mods.jarm.api.crafting.explosion.ExplosionRecipe;
-import cabralrodrigo.mc.mods.jarm.api.crafting.stamper.StamperCraftingManager;
-import cabralrodrigo.mc.mods.jarm.api.crafting.stamper.StamperRecipe;
+import br.com.cabralrodrigo.minecraft.jarm.api.explosion.ExplosionCraftingManager;
+import br.com.cabralrodrigo.minecraft.jarm.api.explosion.ExplosionRecipe;
+import br.com.cabralrodrigo.minecraft.jarm.api.stamper.StamperCraftingManager;
+import br.com.cabralrodrigo.minecraft.jarm.api.stamper.StamperRecipe;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemBlock;
@@ -21,7 +21,7 @@ public class ModRecipes {
         GameRegistry.addRecipe(new ShapelessOreRecipe(ModItems.item_resource.createItemStack(ItemResource.ResourceType.SUPER_GLUE), new Object[]{
                 "slimeball",
                 "cropWheat",
-                Items.milk_bucket
+                Items.MILK_BUCKET
         }));
 
         GameRegistry.addRecipe(new ShapedOreRecipe(ModItems.super_fluffy_boots, new Object[]{
@@ -29,7 +29,7 @@ public class ModRecipes {
                 "I I",
                 "WGW",
                 'I', "ingotIron",
-                'W', new ItemStack(Blocks.wool, 1, OreDictionary.WILDCARD_VALUE),
+                'W', new ItemStack(Blocks.WOOL, 1, OreDictionary.WILDCARD_VALUE),
                 'G', ModItems.item_resource.createItemStack(ItemResource.ResourceType.SUPER_GLUE)
         }));
 
@@ -48,7 +48,7 @@ public class ModRecipes {
                 "ELD",
                 'D', "gemDiamond",
                 'L', "blockLapis",
-                'E', Items.ender_pearl,
+                'E', Items.ENDER_PEARL,
                 'R', "blockRedstone",
                 'P', ModItems.item_resource.createItemStack(ItemResource.ResourceType.STONE_PLATE)
         }));
@@ -57,9 +57,9 @@ public class ModRecipes {
                 "FFF",
                 "DCD",
                 "FFF",
-                'F', Items.feather,
+                'F', Items.FEATHER,
                 'D', "gemDiamond",
-                'C', Items.iron_chestplate
+                'C', Items.IRON_CHESTPLATE
         }));
 
         GameRegistry.addRecipe(new ShapedOreRecipe(ModItems.amulet_storage, new Object[]{
@@ -89,14 +89,14 @@ public class ModRecipes {
                 "LLL",
                 "L L",
                 "LLL",
-                'L', Items.leather
+                'L', Items.LEATHER
         });
 
         GameRegistry.addRecipe(new ItemStack(ModItems.amulet_potion), new Object[]{
                 "PPP",
                 "PSP",
                 "PPP",
-                'P', new ItemStack(Items.potionitem, 1, OreDictionary.WILDCARD_VALUE),
+                'P', new ItemStack(Items.POTIONITEM, 1, OreDictionary.WILDCARD_VALUE),
                 'S', ModItems.amulet_storage
         });
 
@@ -109,36 +109,36 @@ public class ModRecipes {
                 ModItems.item_resource.createItemStack(ItemResource.ResourceType.STONE_PLATE),
                 "gemDiamond",
                 "slimeball",
-                Items.rotten_flesh,
-                Items.bone,
-                Items.spider_eye,
-                Items.gunpowder
+                Items.ROTTEN_FLESH,
+                Items.BONE,
+                Items.SPIDER_EYE,
+                Items.GUNPOWDER
         }));
 
-        FurnaceRecipes.instance().addSmeltingRecipeForBlock(Blocks.stone, ModItems.item_resource.createItemStack(ItemResource.ResourceType.STONE_PLATE), 0F);
+        FurnaceRecipes.instance().addSmeltingRecipeForBlock(Blocks.STONE, ModItems.item_resource.createItemStack(ItemResource.ResourceType.STONE_PLATE), 0F);
 
         ExplosionCraftingManager.instance().addRecipe(new ExplosionRecipe()
-                .addInputBlocks(Blocks.iron_block)
+                .addInputBlocks(Blocks.IRON_BLOCK)
                 .addOutputItemStack(new ItemStack(ModItems.item_resource, 36, ItemResource.ResourceType.IRON_SPIKES.getDamage()))
         );
 
         ExplosionCraftingManager.instance().addRecipe(new ExplosionRecipe()
-                .addInputBlocks(Blocks.iron_ore)
+                .addInputBlocks(Blocks.IRON_ORE)
                 .addOutputItemStack(new ItemStack(ModItems.item_resource, 4, ItemResource.ResourceType.IRON_SPIKES.getDamage()))
         );
 
         ExplosionCraftingManager.instance().addRecipe(new ExplosionRecipe()
-                .addInputItems(ItemBlock.getItemFromBlock(Blocks.iron_ore))
+                .addInputItems(ItemBlock.getItemFromBlock(Blocks.IRON_ORE))
                 .addOutputItemStack(new ItemStack(ModItems.item_resource, 4, ItemResource.ResourceType.IRON_SPIKES.getDamage()))
         );
 
         ExplosionCraftingManager.instance().addRecipe(new ExplosionRecipe()
-                .addInputItems(ItemBlock.getItemFromBlock(Blocks.iron_block))
+                .addInputItems(ItemBlock.getItemFromBlock(Blocks.IRON_BLOCK))
                 .addOutputItemStack(new ItemStack(ModItems.item_resource, 36, ItemResource.ResourceType.IRON_SPIKES.getDamage()))
         );
 
         ExplosionCraftingManager.instance().addRecipe(new ExplosionRecipe()
-                .addInputItems(Items.iron_ingot)
+                .addInputItems(Items.IRON_INGOT)
                 .addOutputItemStack(new ItemStack(ModItems.item_resource, 4, ItemResource.ResourceType.IRON_SPIKES.getDamage()))
         );
 
@@ -149,9 +149,9 @@ public class ModRecipes {
 
         StamperCraftingManager.instance().addRecipe(new StamperRecipe(new ItemStack(ModItems.amulet_storage), 30,
                 ModItems.item_resource.createItemStack(ItemResource.ResourceType.STONE_PLATE), new Object[]{
-                Blocks.diamond_block,
-                Blocks.chest,
-                Blocks.gold_block
+                Blocks.DIAMOND_BLOCK,
+                Blocks.CHEST,
+                Blocks.GOLD_BLOCK
         }));
     }
 }

@@ -5,14 +5,15 @@ import br.com.cabralrodrigo.minecraft.jarm.common.inventory.container.ContainerJ
 import br.com.cabralrodrigo.minecraft.jarm.common.inventory.container.amulet.ContainerAmuletStorage;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.EnumHand;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class GuiAmuletStorage extends GuiContainer {
-    public GuiAmuletStorage(EntityPlayer player) {
-        super(new ContainerAmuletStorage(player));
+    public GuiAmuletStorage(EntityPlayer player, EnumHand hand) {
+        super(new ContainerAmuletStorage(player, hand));
         this.xSize = 176;
         this.ySize = 222;
     }

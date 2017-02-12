@@ -1,5 +1,6 @@
 package br.com.cabralrodrigo.minecraft.jarm.common.item.misc;
 
+import br.com.cabralrodrigo.minecraft.jarm.client.lib.LibItemTextures;
 import br.com.cabralrodrigo.minecraft.jarm.common.Jarm;
 import br.com.cabralrodrigo.minecraft.jarm.common.lib.LibItems;
 import br.com.cabralrodrigo.minecraft.jarm.common.lib.LibMod;
@@ -8,6 +9,7 @@ import br.com.cabralrodrigo.minecraft.jarm.common.registry.util.IRegistrable;
 import br.com.cabralrodrigo.minecraft.jarm.common.util.Translator;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -17,22 +19,25 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ItemSuperFluffyChestplate extends ItemArmor implements IRegistrable {
     private static ArrayList<String> playersWithFlight = new ArrayList<String>();
 
     public ItemSuperFluffyChestplate() {
-        super(LibVanilla.ARMOR_MATERIAL_FLUFFY, 1, 1);
+        super(LibVanilla.ARMOR_MATERIAL_FLUFFY, 1, EntityEquipmentSlot.CHEST);
         this.setUnlocalizedName(LibMod.bindModId(':', this.getName()));
         this.setCreativeTab(Jarm.creativeTab);
         this.setMaxDamage(-1);
         this.setNoRepair();
     }
 
+    @Nullable
     @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
+    public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
         return LibItemTextures.FLUFFY_ARMOR;
     }
 
@@ -55,8 +60,8 @@ public class ItemSuperFluffyChestplate extends ItemArmor implements IRegistrable
 
     @SubscribeEvent
     public void omLivingUpdate(LivingUpdateEvent event) {
-        if (event.entityLiving instanceof EntityPlayer) {
-            EntityPlayer player = ((EntityPlayer) event.entityLiving);
+        if (event.getEntityLiving() instanceof EntityPlayer) {
+            EntityPlayer player = ((EntityPlayer) event.getEntityLiving());
 
             if (playersWithFlight.contains(playerString(player))) {
                 if (isEntityWearingChestplate(player)) {
@@ -88,11 +93,11 @@ public class ItemSuperFluffyChestplate extends ItemArmor implements IRegistrable
     }
 
     private String playerString(EntityPlayer player) {
-        return player.getUniqueID().toString() + ":" + player.worldObj.isRemote;
+        return player.getUniqueID().toString() + ":" + player.world.isRemote;
     }
 
     private boolean isEntityWearingChestplate(EntityPlayer player) {
-        ItemStack chestplate = player.getCurrentArmor(LibVanilla.ArmorSlots.CHEST);
+        ItemStack chestplate = (ItemStack) Arrays.asList(player.getArmorInventoryList()).toArray()[LibVanilla.ArmorSlots.CHEST];
         if (chestplate != null && chestplate.getItem() == this)
             return true;
         else

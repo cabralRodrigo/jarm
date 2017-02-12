@@ -2,7 +2,7 @@ package br.com.cabralrodrigo.minecraft.jarm.common.item.amulet;
 
 import br.com.cabralrodrigo.minecraft.jarm.common.item.ItemAmuletBase;
 import br.com.cabralrodrigo.minecraft.jarm.common.lib.LibItems;
-import com.sun.java.accessibility.util.Translator;
+import br.com.cabralrodrigo.minecraft.jarm.common.util.Translator;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
@@ -10,7 +10,10 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -79,23 +82,26 @@ public class ItemAmuletCage extends ItemAmuletBase {
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        ItemStack stack = player.getHeldItem(hand);
+
         if (hasEntity(stack)) {
             if (!world.isRemote) {
-                BlockPos entityPos = pos.offset(side);
+                BlockPos entityPos = pos.offset(facing);
 
-                Entity entity = EntityList.createEntityByName(getEntityString(stack), world);
+                Entity entity = EntityList.createEntityByIDFromName(new ResourceLocation(getEntityString(stack)), world);
+
                 entity.readFromNBT(getEntityInformation(stack));
                 entity.setLocationAndAngles(entityPos.getX(), entityPos.getY(), entityPos.getZ(), entity.rotationYaw, entity.rotationPitch);
 
-                world.spawnEntityInWorld(entity);
+                world.spawnEntity(entity);
 
                 if (!player.capabilities.isCreativeMode)
                     removeEntity(stack);
             }
-            return true;
+            return EnumActionResult.SUCCESS;
         } else
-            return false;
+            return EnumActionResult.FAIL;
     }
 
     @Override
@@ -104,9 +110,9 @@ public class ItemAmuletCage extends ItemAmuletBase {
     }
 
     @Override
-    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase target) {
-        if (!hasEntity(stack) && target instanceof EntityLiving && !(target instanceof IBossDisplayData)) {
-            if (!player.worldObj.isRemote) {
+    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase target, EnumHand hand) {
+        if (!hasEntity(stack) && target instanceof EntityLiving && target.isNonBoss()) {
+            if (!player.world.isRemote) {
                 if (!((EntityLiving) target).isDead) {
                     setEntity(stack, (EntityLiving) target);
                     target.setDead();

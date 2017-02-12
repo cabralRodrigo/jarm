@@ -5,13 +5,19 @@ import br.com.cabralrodrigo.minecraft.jarm.common.inventory.impl.amulet.Inventor
 import br.com.cabralrodrigo.minecraft.jarm.common.item.ItemAmuletVariantBase;
 import br.com.cabralrodrigo.minecraft.jarm.common.lib.LibGui;
 import br.com.cabralrodrigo.minecraft.jarm.common.lib.LibItems;
+import br.com.cabralrodrigo.minecraft.jarm.common.util.EnumHandHelper;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.PotionUtils;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -31,18 +37,19 @@ public class ItemAmuletPotion extends ItemAmuletVariantBase {
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+        ItemStack itemStack = player.getHeldItem(hand);
+
         if (!world.isRemote) {
             if (player.isSneaking()) {
                 this.setEnabled(itemStack, false);
-                player.openGui(Jarm.instance, LibGui.AMULET_POTION, world, (int) player.posX, (int) player.posY, (int) player.posZ);
+                player.openGui(Jarm.instance, LibGui.AMULET_POTION, world, EnumHandHelper.ToInt(hand), 0, 0);
             } else
                 this.setEnabled(itemStack, !this.isEnabled(itemStack));
         }
 
-        return itemStack;
+        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStack);
     }
-
 
     @Override
     @SideOnly(Side.CLIENT)
@@ -73,7 +80,7 @@ public class ItemAmuletPotion extends ItemAmuletVariantBase {
 
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (event.phase == TickEvent.Phase.END && !event.player.worldObj.isRemote) {
+        if (event.phase == TickEvent.Phase.END && !event.player.world.isRemote) {
             List<Integer> slots = this.getAllAmulets(event.player.inventory);
 
             for (int slot : slots) {
@@ -84,13 +91,13 @@ public class ItemAmuletPotion extends ItemAmuletVariantBase {
                     ItemStack stackPotion = inventoryAmulet.getStackInSlot(slotAmulet);
 
                     if (stackPotion != null && stackPotion.getItem() instanceof ItemPotion) {
-                        List<PotionEffect> effectsPotion = Items.potionitem.getEffects(stackPotion);
+                        List<PotionEffect> effectsPotion = PotionUtils.getEffectsFromStack(stackPotion);
 
                         if (stackPotion != null && this.canApplyEffectsOnPlayer(event.player, effectsPotion)) {
                             for (PotionEffect effect : effectsPotion)
                                 event.player.addPotionEffect(new PotionEffect(effect));
 
-                            inventoryAmulet.setInventorySlotContents(slotAmulet, new ItemStack(Items.glass_bottle));
+                            inventoryAmulet.setInventorySlotContents(slotAmulet, new ItemStack(Items.GLASS_BOTTLE));
                         }
                     }
                 }
@@ -117,7 +124,7 @@ public class ItemAmuletPotion extends ItemAmuletVariantBase {
 
         for (PotionEffect effect : effects)
             for (PotionEffect effectPlayer : effectsPlayer)
-                if (effect.getPotionID() == effectPlayer.getPotionID())
+                if (Potion.getIdFromPotion(effect.getPotion()) == Potion.getIdFromPotion(effectPlayer.getPotion()))
                     return false;
 
         return true;

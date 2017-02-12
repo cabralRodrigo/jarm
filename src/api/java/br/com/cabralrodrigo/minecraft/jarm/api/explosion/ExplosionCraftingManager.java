@@ -1,4 +1,4 @@
-package cabralrodrigo.mc.mods.jarm.api.crafting.explosion;
+package br.com.cabralrodrigo.minecraft.jarm.api.explosion;
 
 import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;

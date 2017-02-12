@@ -5,14 +5,15 @@ import br.com.cabralrodrigo.minecraft.jarm.common.inventory.container.ContainerJ
 import br.com.cabralrodrigo.minecraft.jarm.common.inventory.container.misc.ContainerSeedBag;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.EnumHand;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class GuiSeedBag extends GuiContainer {
-    public GuiSeedBag(EntityPlayer player) {
-        super(new ContainerSeedBag(player));
+    public GuiSeedBag(EntityPlayer player, EnumHand hand) {
+        super(new ContainerSeedBag(player, hand));
         this.xSize = 176;
         this.ySize = 168;
     }

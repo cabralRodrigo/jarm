@@ -1,4 +1,4 @@
-package cabralrodrigo.mc.mods.jarm.api.crafting.stamper;
+package br.com.cabralrodrigo.minecraft.jarm.api.stamper;
 
 import java.util.ArrayList;
 import java.util.List;

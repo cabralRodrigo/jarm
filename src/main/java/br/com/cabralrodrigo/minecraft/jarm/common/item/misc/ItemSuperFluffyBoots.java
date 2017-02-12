@@ -10,6 +10,7 @@ import br.com.cabralrodrigo.minecraft.jarm.common.util.Translator;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -19,20 +20,23 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.List;
 
 public class ItemSuperFluffyBoots extends ItemArmor implements IRegistrable {
 
     public ItemSuperFluffyBoots() {
-        super(LibVanilla.ARMOR_MATERIAL_FLUFFY, 1, 3);
+        super(LibVanilla.ARMOR_MATERIAL_FLUFFY, 1, EntityEquipmentSlot.FEET);
         this.setUnlocalizedName(LibMod.bindModId(':', this.getName()));
         this.setCreativeTab(Jarm.creativeTab);
         this.setMaxDamage(-1);
         this.setNoRepair();
     }
 
+    @Nullable
     @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
+    public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
         return LibItemTextures.FLUFFY_ARMOR;
     }
 
@@ -51,14 +55,14 @@ public class ItemSuperFluffyBoots extends ItemArmor implements IRegistrable {
     @SubscribeEvent
     public void onLivingFall(LivingFallEvent event) {
         if (FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER)
-            if (this.isEntityWearingBoots(event.entityLiving))
-                event.distance = 0F;
+            if (this.isEntityWearingBoots(event.getEntityLiving()))
+                event.setDistance(0F);
     }
 
     private boolean isEntityWearingBoots(EntityLivingBase entity) {
         if (entity != null && entity instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) entity;
-            ItemStack boots = player.getCurrentArmor(LibVanilla.ArmorSlots.BOOTS);
+            ItemStack boots = (ItemStack) Arrays.asList(player.getArmorInventoryList()).toArray()[LibVanilla.ArmorSlots.BOOTS];
             if (boots != null && boots.getItem() == this)
                 return true;
         }

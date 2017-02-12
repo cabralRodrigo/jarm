@@ -9,7 +9,7 @@ public interface IInventoryNBT extends IInventory {
 
     void deserializeFromItemStack(ItemStack stack);
 
-    void writeToNBT(NBTTagCompound nbt);
+    NBTTagCompound writeToNBT(NBTTagCompound nbt);
 
     void readFromNBT(NBTTagCompound nbt);
 }

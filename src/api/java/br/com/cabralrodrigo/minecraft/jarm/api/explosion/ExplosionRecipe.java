@@ -1,5 +1,6 @@
-package cabralrodrigo.mc.mods.jarm.api.crafting.explosion;
+package br.com.cabralrodrigo.minecraft.jarm.api.explosion;
 
+import br.com.cabralrodrigo.minecraft.jarm.api.util.ItemHelper;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -101,20 +102,20 @@ public class ExplosionRecipe {
             for (AffectedExplosionObject object : this.outputs) {
                 if (object.isEntity()) {
                     try {
-                        Entity entity = (Entity) ((Class) object.getValue()).getConstructor(new Class[]{World.class}).newInstance(new Object[]{event.world});
-                        entity.setLocationAndAngles(event.explosion.getPosition().xCoord, event.explosion.getPosition().yCoord, event.explosion.getPosition().zCoord, 0, 0);
-                        event.world.spawnEntityInWorld(entity);
+                        Entity entity = (Entity) ((Class) object.getValue()).getConstructor(new Class[]{World.class}).newInstance(new Object[]{event.getWorld()});
+                        entity.setLocationAndAngles(event.getExplosion().getPosition().xCoord, event.getExplosion().getPosition().yCoord, event.getExplosion().getPosition().zCoord, 0, 0);
+                        event.getWorld().spawnEntity(entity);
 
                     } catch (Exception exception) {
                         exception.printStackTrace();
                     }
                 } else if (object.isItemStack()) {
-                    ItemHelper.spawnItemStack(event.world, new BlockPos(event.explosion.getPosition()), ((ItemStack) object.getValue()).copy());
+                    ItemHelper.spawnItemStack(event.getWorld(), new BlockPos(event.getExplosion().getPosition()), ((ItemStack) object.getValue()).copy());
                 } else {
                     Item itemToSpawn = object.isItem() ? (Item) object.getValue() : ItemBlock.getItemFromBlock((Block) object.getValue());
                     ItemStack stackToSpawn = new ItemStack(itemToSpawn);
 
-                    ItemHelper.spawnItemStack(event.world, new BlockPos(event.explosion.getPosition()), stackToSpawn);
+                    ItemHelper.spawnItemStack(event.getWorld(), new BlockPos(event.getExplosion().getPosition()), stackToSpawn);
                 }
             }
             return true;

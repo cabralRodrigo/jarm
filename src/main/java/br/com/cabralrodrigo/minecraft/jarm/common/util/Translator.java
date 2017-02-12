@@ -1,12 +1,14 @@
 package br.com.cabralrodrigo.minecraft.jarm.common.util;
 
 import br.com.cabralrodrigo.minecraft.jarm.common.lib.LibMod;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 
 public final class Translator {
     public static String translate(String category, String key, Object... format) {
         String builtKey = String.format("%s.%s:%s", category, LibMod.MOD_ID, key);
-        String translated = StatCollector.translateToLocalFormatted(builtKey, format);
-
+        String translated = I18n.format(builtKey, format);
         return translated.replace("$", "\u00a7");
     }
 
@@ -15,10 +17,10 @@ public final class Translator {
     }
 
     public static String translateEntityName(String entity) {
-        return StatCollector.translateToLocal("entity." + entity + ".name");
+       return I18n.format("entity." + entity + ".name");
     }
 
-    public static IChatComponent translateChat(String category, String key, String key2) {
-        return new ChatComponentText(translate(category, key, key2));
+    public static ITextComponent translateChat(String category, String key, String key2) {
+        return new TextComponentString(translate(category, key, key2));
     }
 }

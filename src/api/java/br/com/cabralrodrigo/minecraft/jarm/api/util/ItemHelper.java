@@ -1,4 +1,4 @@
-package br.com.cabralrodrigo.minecraft.jarm.common.util;
+package br.com.cabralrodrigo.minecraft.jarm.api.util;
 
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
@@ -19,14 +19,14 @@ public final class ItemHelper {
         float f1 = rand.nextFloat() * 0.8F + 0.1F;
         float f2 = rand.nextFloat() * 0.8F + 0.1F;
 
-        while (stack.stackSize > 0) {
+        while (stack.getCount() > 0) {
             int i = rand.nextInt(21) + 10;
 
-            if (i > stack.stackSize) {
-                i = stack.stackSize;
+            if (i > stack.getCount()) {
+                i = stack.getCount();
             }
 
-            stack.stackSize -= i;
+            stack.shrink(i);
             EntityItem entityitem = new EntityItem(worldIn, x + (double) f, y + (double) f1, z + (double) f2, new ItemStack(stack.getItem(), i, stack.getMetadata()));
 
             if (stack.hasTagCompound())
@@ -36,7 +36,7 @@ public final class ItemHelper {
             entityitem.motionX = rand.nextGaussian() * (double) f3;
             entityitem.motionY = rand.nextGaussian() * (double) f3 + 0.20000000298023224D;
             entityitem.motionZ = rand.nextGaussian() * (double) f3;
-            worldIn.spawnEntityInWorld(entityitem);
+            worldIn.spawnEntity(entityitem);
         }
     }
 }

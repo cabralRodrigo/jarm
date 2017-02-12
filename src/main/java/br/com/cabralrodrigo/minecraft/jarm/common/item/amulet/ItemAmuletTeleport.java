@@ -5,9 +5,11 @@ import br.com.cabralrodrigo.minecraft.jarm.common.lib.LibItems;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Teleporter;
 import net.minecraft.world.World;
@@ -48,27 +50,27 @@ public class ItemAmuletTeleport extends ItemAmuletBase {
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         if (!world.isRemote) {
-            AmuletInfo info = new AmuletInfo(itemStack);
+            AmuletInfo info = new AmuletInfo(player.getHeldItem(hand));
 
             if (info.isLocationSet()) {
                 BlockPos pos = info.getLocation();
 
                 if (player.isRiding())
-                    player.mountEntity(null);
+                    player.dismountRidingEntity();
 
-                if (player.dimension != info.getDimensionID()) {
-                    ServerConfigurationManager manager = ((EntityPlayerMP) player).mcServer.getConfigurationManager();
-                    manager.transferPlayerToDimension((EntityPlayerMP) player, info.getDimensionID(), new TeleporterAmulet((WorldServer) world, info));
-                } else
+                if (player.dimension != info.getDimensionID())
+                    player.changeDimension(info.getDimensionID());
+                else
                     player.setPositionAndUpdate(pos.getX() + .5F, pos.getY(), pos.getZ() + .5F);
             } else {
                 info.setLocation(player.dimension, new BlockPos(player.posX, player.posY, player.posZ));
                 info.save();
             }
         }
-        return itemStack;
+
+        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
     }
 
     private class AmuletInfo {
@@ -88,7 +90,7 @@ public class ItemAmuletTeleport extends ItemAmuletBase {
             info.setInteger("y", this.pos.getY());
             info.setInteger("z", this.pos.getZ());
             info.setInteger("dimension_id", this.dimensionID);
-            info.setString("dimension_name", DimensionManager.createProviderFor(this.dimensionID).getDimensionName());
+            info.setString("dimension_name", DimensionManager.createProviderFor(this.dimensionID).getDimensionType().getName());
 
             NBTTagCompound compound = this.stack.getTagCompound();
             if (compound == null)

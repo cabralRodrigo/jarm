@@ -9,7 +9,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityMobSpawner;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -45,9 +47,10 @@ public class ItemAmuletTeleposer extends ItemAmuletBase {
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        ItemStack stack = player.getHeldItem(hand);
         if (this.hasSpawner(stack)) {
-            BlockPos posSpawner = pos.offset(side);
+            BlockPos posSpawner = pos.offset(facing);
             if (world.isAirBlock(posSpawner)) {
                 if (!world.isRemote) {
                     NBTTagCompound nbtSpawner = this.getSpawnerInfo(stack);
@@ -55,14 +58,14 @@ public class ItemAmuletTeleposer extends ItemAmuletBase {
                     nbtSpawner.setInteger("y", posSpawner.getY());
                     nbtSpawner.setInteger("z", posSpawner.getZ());
 
-                    world.setBlockState(posSpawner, Blocks.mob_spawner.getDefaultState());
+                    world.setBlockState(posSpawner, Blocks.MOB_SPAWNER.getDefaultState());
                     world.getTileEntity(posSpawner).readFromNBT(nbtSpawner);
-                    world.markBlockForUpdate(posSpawner);
+                    world.notifyBlockUpdate(posSpawner, Blocks.MOB_SPAWNER.getDefaultState(), Blocks.MOB_SPAWNER.getDefaultState(), 3);
 
                     if (!player.capabilities.isCreativeMode)
-                        player.inventory.mainInventory[player.inventory.currentItem] = null;
+                        player.setHeldItem(hand, null);
                 } else
-                    return true;
+                    return EnumActionResult.SUCCESS;
             }
         } else {
             TileEntity tile = world.getTileEntity(pos);
@@ -74,11 +77,11 @@ public class ItemAmuletTeleposer extends ItemAmuletBase {
                     this.setSpawnerInfo(stack, nbtSpawner);
                     world.destroyBlock(pos, false);
                 } else
-                    return true;
+                    return EnumActionResult.SUCCESS;
             }
         }
 
-        return false;
+        return EnumActionResult.FAIL;
     }
 
     private boolean hasSpawner(ItemStack stack) {

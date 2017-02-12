@@ -3,15 +3,16 @@ package br.com.cabralrodrigo.minecraft.jarm.common.inventory.container.amulet;
 import br.com.cabralrodrigo.minecraft.jarm.common.inventory.container.ContainerJarmBase;
 import br.com.cabralrodrigo.minecraft.jarm.common.inventory.impl.amulet.InventoryAmuletStorage;
 import br.com.cabralrodrigo.minecraft.jarm.common.inventory.slot.SlotBlacklist;
+import br.com.cabralrodrigo.minecraft.jarm.common.registry.ModItems;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.util.EnumHand;
 
-@ChestContainer(showButtons = true, rowSize = 9, isLargeChest = false)
 public class ContainerAmuletStorage extends ContainerJarmBase {
     private int amuletSlot;
 
-    public ContainerAmuletStorage(EntityPlayer player) {
-        super(player, new InventoryAmuletStorage(player.getCurrentEquippedItem()), 140);
+    public ContainerAmuletStorage(EntityPlayer player, EnumHand hand) {
+        super(player, new InventoryAmuletStorage(player.getHeldItem(hand)), 140);
         this.amuletSlot = player.inventory.currentItem;
     }
 
@@ -23,7 +24,7 @@ public class ContainerAmuletStorage extends ContainerJarmBase {
     @Override
     public void onContainerClosed(EntityPlayer player) {
         super.onContainerClosed(player);
-        if (!player.worldObj.isRemote)
+        if (!player.world.isRemote)
             this.save();
     }
 
@@ -41,6 +42,6 @@ public class ContainerAmuletStorage extends ContainerJarmBase {
 
     @Override
     public void save() {
-        saveInventoryOnItemStack(this.inventory, player.inventory.mainInventory[this.amuletSlot]);
+        saveInventoryOnItemStack(this.inventory, player.inventory.mainInventory.get(this.amuletSlot));
     }
 }

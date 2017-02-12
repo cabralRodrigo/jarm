@@ -6,6 +6,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 
 public class InventoryBase implements IInventoryNBT {
     protected int size;
@@ -20,7 +23,7 @@ public class InventoryBase implements IInventoryNBT {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbt) {
+    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
         NBTTagList items = new NBTTagList();
         for (int i = 0; i < this.getSizeInventory(); i++)
             if (this.getStackInSlot(i) != null) {
@@ -39,6 +42,8 @@ public class InventoryBase implements IInventoryNBT {
 
             nbt.setTag("display", nbtDisplay);
         }
+
+        return nbt;
     }
 
     @Override
@@ -47,7 +52,7 @@ public class InventoryBase implements IInventoryNBT {
         for (int i = 0; i < items.tagCount(); i++) {
             NBTTagCompound nbtItem = items.getCompoundTagAt(i);
             byte slot = nbtItem.getByte("slot");
-            this.inventory[slot] = ItemStack.loadItemStackFromNBT(nbtItem);
+            this.inventory[slot] = new ItemStack(nbtItem);
         }
 
         if (nbt.hasKey("display", 10)) {
@@ -80,6 +85,11 @@ public class InventoryBase implements IInventoryNBT {
     }
 
     @Override
+    public boolean isEmpty() {
+        return this.inventory.length == 0;
+    }
+
+    @Override
     public ItemStack getStackInSlot(int index) {
         return this.inventory[index];
     }
@@ -87,14 +97,14 @@ public class InventoryBase implements IInventoryNBT {
     @Override
     public ItemStack decrStackSize(int index, int count) {
         if (this.inventory[index] != null) {
-            if (this.inventory[index].stackSize <= count) {
+            if (this.inventory[index].getCount() <= count) {
                 ItemStack itemstack1 = this.inventory[index];
                 this.inventory[index] = null;
                 return itemstack1;
             } else {
                 ItemStack itemstack = this.inventory[index].splitStack(count);
 
-                if (this.inventory[index].stackSize == 0) {
+                if (this.inventory[index].getCount() == 0) {
                     this.inventory[index] = null;
                 }
 
@@ -116,8 +126,8 @@ public class InventoryBase implements IInventoryNBT {
     public void setInventorySlotContents(int index, ItemStack stack) {
         this.inventory[index] = stack;
 
-        if (this.inventory[index] != null && this.inventory[index].stackSize > this.getInventoryStackLimit())
-            this.inventory[index].stackSize = this.getInventoryStackLimit();
+        if (this.inventory[index] != null && this.inventory[index].getCount() > this.getInventoryStackLimit())
+            this.inventory[index].setCount(this.getInventoryStackLimit());
     }
 
     @Override
@@ -131,8 +141,8 @@ public class InventoryBase implements IInventoryNBT {
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer player) {
-        return true;
+    public boolean isUsableByPlayer(EntityPlayer player) {
+        return false;
     }
 
     @Override
@@ -182,7 +192,7 @@ public class InventoryBase implements IInventoryNBT {
     }
 
     @Override
-    public IChatComponent getDisplayName() {
-        return this.hasCustomName() ? new ChatComponentText(this.getName()) : new ChatComponentTranslation(this.getName());
+    public ITextComponent getDisplayName() {
+        return this.hasCustomName() ? new TextComponentString(this.getName()) : new TextComponentTranslation(this.getName());
     }
 }

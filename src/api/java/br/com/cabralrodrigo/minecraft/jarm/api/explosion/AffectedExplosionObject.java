@@ -1,4 +1,4 @@
-package cabralrodrigo.mc.mods.jarm.api.crafting.explosion;
+package br.com.cabralrodrigo.minecraft.jarm.api.explosion;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -36,11 +36,11 @@ public class AffectedExplosionObject {
     public boolean affectExplosionResults(ExplosionEvent.Detonate event, boolean simulate) {
         if (this.isBlock()) {
             for (BlockPos pos : event.getAffectedBlocks()) {
-                Block block = event.world.getBlockState(pos).getBlock();
+                Block block = event.getWorld().getBlockState(pos).getBlock();
 
                 if (block == this.getValue()) {
                     if (!simulate)
-                        event.world.setBlockToAir(pos);
+                        event.getWorld().setBlockToAir(pos);
                     return true;
                 }
             }
@@ -63,11 +63,11 @@ public class AffectedExplosionObject {
                         ItemStack stack = ((EntityItem) entity).getEntityItem();
                         if (stack != null && stack.getItem() != null)
                             if (stack.getItem() == this.getValue())
-                                if (stack.stackSize > 0) {
+                                if (stack.getCount() > 0) {
                                     if (!simulate) {
-                                        stack.stackSize -= 1;
+                                        stack.shrink(1);
 
-                                        if (stack.stackSize < 1)
+                                        if (stack.getCount() < 1)
                                             entity.setDead();
                                     }
 
@@ -82,7 +82,7 @@ public class AffectedExplosionObject {
                     if (entity instanceof EntityItem) {
                         ItemStack stack = ((EntityItem) entity).getEntityItem();
 
-                        if (stack.stackSize < stackValue.stackSize)
+                        if (stack.getCount() < stackValue.getCount())
                             continue;
 
                         if (stack.getItem() != stackValue.getItem())
@@ -99,9 +99,9 @@ public class AffectedExplosionObject {
                             continue;
 
                         if (!simulate) {
-                            stack.stackSize -= stackValue.stackSize;
+                            stack.shrink(stackValue.getCount());
 
-                            if (stack.stackSize <= 0)
+                            if (stack.getCount() <= 0)
                                 entity.setDead();
                         }
 

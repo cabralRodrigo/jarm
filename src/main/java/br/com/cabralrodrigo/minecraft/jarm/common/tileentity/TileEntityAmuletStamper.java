@@ -6,9 +6,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.text.ITextComponent;
 
 public class TileEntityAmuletStamper extends TileEntity implements IInventoryNBT {
-
 
     private InventoryAmuletStamper inventory;
 
@@ -17,9 +17,11 @@ public class TileEntityAmuletStamper extends TileEntity implements IInventoryNBT
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound compound) {
+    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
         this.inventory.writeToNBT(compound);
+
+        return compound;
     }
 
     @Override
@@ -41,6 +43,11 @@ public class TileEntityAmuletStamper extends TileEntity implements IInventoryNBT
     @Override
     public int getSizeInventory() {
         return this.inventory.getSizeInventory();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return this.inventory.isEmpty();
     }
 
     @Override
@@ -69,8 +76,8 @@ public class TileEntityAmuletStamper extends TileEntity implements IInventoryNBT
     }
 
     @Override
-    public boolean isUseableByPlayer(EntityPlayer player) {
-        return this.inventory.isUseableByPlayer(player);
+    public boolean isUsableByPlayer(EntityPlayer player) {
+        return false;
     }
 
     @Override
@@ -119,7 +126,7 @@ public class TileEntityAmuletStamper extends TileEntity implements IInventoryNBT
     }
 
     @Override
-    public IChatComponent getDisplayName() {
+    public ITextComponent getDisplayName() {
         return this.inventory.getDisplayName();
     }
 }

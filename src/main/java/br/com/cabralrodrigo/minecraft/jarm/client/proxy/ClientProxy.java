@@ -9,6 +9,7 @@ import br.com.cabralrodrigo.minecraft.jarm.common.proxy.CommonProxy;
 import br.com.cabralrodrigo.minecraft.jarm.common.registry.util.IRegistrable;
 import br.com.cabralrodrigo.minecraft.jarm.common.registry.util.IVariantRegistrable;
 import br.com.cabralrodrigo.minecraft.jarm.common.tileentity.TileEntityAmuletStamper;
+import br.com.cabralrodrigo.minecraft.jarm.common.util.EnumHandHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.EntityPlayer;
@@ -46,19 +47,19 @@ public class ClientProxy extends CommonProxy {
     }
 
     @Override
-    public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
+    public Object getClientGuiElement(int id, EntityPlayer player, World world, int p1, int p2, int p3) {
         if (world instanceof WorldClient)
             switch (id) {
                 case LibGui.AMULET_STORAGE:
-                    return new GuiAmuletStorage(player);
+                    return new GuiAmuletStorage(player, EnumHandHelper.ToEnum(p1));
                 case LibGui.ENDER_ENCHATMENT_TABLE:
                     return new GuiEnderEnchantmentTable(player);
                 case LibGui.SEED_BAG:
-                    return new GuiSeedBag(player);
+                    return new GuiSeedBag(player, EnumHandHelper.ToEnum(p1));
                 case LibGui.AMULET_POTION:
-                    return new GuiAmuletPotion(player);
+                    return new GuiAmuletPotion(player, EnumHandHelper.ToEnum(p1));
                 case LibGui.AMULET_STAMPER:
-                    return new GuiAmuletStamper(player, (TileEntityAmuletStamper) world.getTileEntity(new BlockPos(x, y, z)));
+                    return new GuiAmuletStamper(player, (TileEntityAmuletStamper) world.getTileEntity(new BlockPos(p1, p2, p3)));
             }
 
         return null;

@@ -6,6 +6,9 @@ import com.google.common.collect.ImmutableMap;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -37,13 +40,15 @@ public class ItemAmuletMagnetic extends ItemAmuletVariantBase {
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+        ItemStack itemStack = player.getHeldItem(hand);
+
         if (!world.isRemote) {
             if (player.isSneaking())
                 this.setMagnetEnabled(itemStack, !this.isMagnetEnabled(itemStack));
         }
 
-        return itemStack;
+        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStack);
     }
 
     @Override
@@ -61,12 +66,13 @@ public class ItemAmuletMagnetic extends ItemAmuletVariantBase {
 
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (event.phase == Phase.END && !event.player.worldObj.isRemote) {
+        if (event.phase == Phase.END && !event.player.world.isRemote) {
             if (this.playerHasMagnetActive(event.player)) {
                 EntityPlayer player = event.player;
                 int RANGE = 5;
-                AxisAlignedBB aabb = AxisAlignedBB.fromBounds(player.posX - RANGE, player.posY - RANGE, player.posZ - RANGE, player.posX + RANGE, player.posY + RANGE, player.posZ + RANGE);
-                List<EntityItem> items = event.player.worldObj.getEntitiesWithinAABB(EntityItem.class, aabb);
+
+                AxisAlignedBB aabb = new AxisAlignedBB(player.posX - RANGE, player.posY - RANGE, player.posZ - RANGE, player.posX + RANGE, player.posY + RANGE, player.posZ + RANGE);
+                List<EntityItem> items = event.player.world.getEntitiesWithinAABB(EntityItem.class, aabb);
 
                 for (EntityItem item : items) {
                     double x = player.posX + 0.5D - item.posX;
@@ -92,7 +98,7 @@ public class ItemAmuletMagnetic extends ItemAmuletVariantBase {
     }
 
     private boolean playerHasMagnetActive(EntityPlayer player) {
-        ItemStack[] inventory = player.inventory.mainInventory;
+        List<ItemStack> inventory = player.inventory.mainInventory;
 
         for (ItemStack stack : inventory)
             if (stack != null && stack.getItem() == this)

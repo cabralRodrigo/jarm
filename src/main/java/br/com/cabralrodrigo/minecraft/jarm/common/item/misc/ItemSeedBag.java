@@ -5,11 +5,12 @@ import br.com.cabralrodrigo.minecraft.jarm.common.inventory.impl.misc.InventoryS
 import br.com.cabralrodrigo.minecraft.jarm.common.item.ItemJarmBase;
 import br.com.cabralrodrigo.minecraft.jarm.common.lib.LibGui;
 import br.com.cabralrodrigo.minecraft.jarm.common.lib.LibItems;
+import br.com.cabralrodrigo.minecraft.jarm.common.util.EnumHandHelper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
@@ -27,16 +28,18 @@ public class ItemSeedBag extends ItemJarmBase {
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        ItemStack stack = player.getHeldItem(hand);
+
         if (player.isSneaking()) {
             if (!world.isRemote)
-                this.onItemRightClick(stack, world, player);
+                this.onItemRightClick(world, player, hand);
 
-            return false;
+            return EnumActionResult.SUCCESS;
         }
 
         IBlockState block = world.getBlockState(pos);
-        if (block != null && side == EnumFacing.UP) {
+        if (block != null && facing == EnumFacing.UP) {
             if (!world.isRemote) {
                 InventorySeedBag inventory = new InventorySeedBag(stack);
 
@@ -50,7 +53,7 @@ public class ItemSeedBag extends ItemJarmBase {
                             ItemStack stackSeed = inventory.removeStackFromSlot(slotIndex);
                             if (stackSeed != null) {
                                 stackSeed = this.tryToPlant(stackSeed, player, farmPos, world, hitX, hitY, hitZ);
-                                if (slotIndex >= 0 && stackSeed != null && stackSeed.stackSize > 0)
+                                if (slotIndex >= 0 && stackSeed != null && stackSeed.getCount() > 0)
                                     inventory.setInventorySlotContents(slotIndex, stackSeed);
                             }
                         }
@@ -58,18 +61,18 @@ public class ItemSeedBag extends ItemJarmBase {
 
                 inventory.serializeIntoItemStack(stack);
             }
-            return true;
+            return EnumActionResult.SUCCESS;
         } else
-            return false;
+            return EnumActionResult.FAIL;
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         if (!world.isRemote)
             if (player.isSneaking())
-                player.openGui(Jarm.instance, LibGui.SEED_BAG, world, (int) player.posX, (int) player.posY, (int) player.posZ);
+                player.openGui(Jarm.instance, LibGui.SEED_BAG, world, EnumHandHelper.ToInt(hand), 0, 0);
 
-        return itemStack;
+        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
     }
 
     @Override
@@ -84,7 +87,7 @@ public class ItemSeedBag extends ItemJarmBase {
         if (stack != null && stack.getItem() instanceof IPlantable) {
             if (this.canBePlantedAt(player, pos, stack, world)) {
                 world.setBlockState(pos.up(), ((IPlantable) stack.getItem()).getPlant(world, pos.up()));
-                stack.stackSize--;
+                stack.shrink(1);
             }
         }
         return stack;
@@ -100,7 +103,9 @@ public class ItemSeedBag extends ItemJarmBase {
         else if (!player.canPlayerEdit(pos.offset(EnumFacing.UP), EnumFacing.UP, stack))
             return false;
 
-        boolean canBePlanted = world.getBlockState(pos).getBlock().canSustainPlant(world, pos, EnumFacing.UP, (IPlantable) stack.getItem());
+        IBlockState state = world.getBlockState(pos);
+
+        boolean canBePlanted = state.getBlock().canSustainPlant(state, world, pos, EnumFacing.UP, (IPlantable) stack.getItem());
 
         return canBePlanted && world.isAirBlock(pos.up());
     }

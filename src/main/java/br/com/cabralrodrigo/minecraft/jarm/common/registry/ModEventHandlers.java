@@ -1,5 +1,7 @@
 package br.com.cabralrodrigo.minecraft.jarm.common.registry;
 
+import br.com.cabralrodrigo.minecraft.jarm.common.handler.EventHandlerItemFood;
+import br.com.cabralrodrigo.minecraft.jarm.api.explosion.ExplosionCraftingManager;
 import net.minecraftforge.common.MinecraftForge;
 
 public final class ModEventHandlers {
