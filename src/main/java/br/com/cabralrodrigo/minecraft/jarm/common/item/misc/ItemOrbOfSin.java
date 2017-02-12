@@ -1,19 +1,25 @@
 package br.com.cabralrodrigo.minecraft.jarm.common.item.misc;
 
-import br.com.cabralrodrigo.minecraft.jarm.common.dimension.TeleporterUmbral;
 import br.com.cabralrodrigo.minecraft.jarm.common.item.ItemJarmBase;
 import br.com.cabralrodrigo.minecraft.jarm.common.lib.LibDimensions;
 import br.com.cabralrodrigo.minecraft.jarm.common.lib.LibItems;
+import br.com.cabralrodrigo.minecraft.jarm.common.registry.ModItems;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -41,32 +47,43 @@ public class ItemOrbOfSin extends ItemJarmBase {
     }
 
     @Override
-    public ItemStack onItemUseFinish(ItemStack stack, World world, EntityPlayer player) {
-        if (player.dimension != LibDimensions.UMBRAL_ID) {
-            if (!world.isRemote) {
-                world.playSoundAtEntity(player, "ambient.weather.thunder", 10000F, .8F);
-                world.playSoundAtEntity(player, "random.explode", 10000F, .5F);
-                MinecraftServer.getServer().getConfigurationManager().transferPlayerToDimension((EntityPlayerMP) player, LibDimensions.UMBRAL_ID, new TeleporterUmbral((WorldServer) world));
-            }
-            return null;
-        } else {
-            if (!world.isRemote)
-                player.addChatMessage(new ChatComponentText(this.translateForItem("cannot_teleport")));
-        }
+    public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase entityLiving) {
+        if (entityLiving instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) entityLiving;
+            if (player.dimension != LibDimensions.UMBRAL_ID) {
+                if (!world.isRemote) {
+                    world.playSound(player, player.getPosition(), SoundEvents.ENTITY_LIGHTNING_THUNDER, SoundCategory.PLAYERS, 10000F, .8F);
+                    world.playSound(player, player.getPosition(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 10000F, .8F);
 
+                    player.changeDimension(LibDimensions.UMBRAL_ID);
+                }
+                return null;
+            } else {
+                if (!world.isRemote)
+                    player.sendStatusMessage(new TextComponentString(this.translateForItem("cannot_teleport")), true);
+            }
+
+        }
         return stack;
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
-        player.setItemInUse(itemStack, this.getMaxItemUseDuration(itemStack));
-
-        return itemStack;
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+        player.setActiveHand(hand);
+        return new ActionResult(EnumActionResult.SUCCESS, player.getHeldItem(hand));
     }
 
+
     @SubscribeEvent
-    public void onLivingDrops(LivingDropsEvent event) {
-        if (event.entity instanceof EntityWither)
-            event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, new ItemStack(ModItems.orb_of_sin, 1)));
+    public void onLivingDrops2(LivingDropsEvent event) {
+        Entity entity = event.getEntity();
+
+        if (entity instanceof EntityWither) {
+            BlockPos pos = entity.getPosition();
+            ItemStack result = new ItemStack(ModItems.orb_of_sin, 1);
+            EntityItem entityItem = new EntityItem(entity.getEntityWorld(), pos.getX(), pos.getY(), pos.getZ(), result);
+
+            event.getDrops().add(entityItem);
+        }
     }
 }

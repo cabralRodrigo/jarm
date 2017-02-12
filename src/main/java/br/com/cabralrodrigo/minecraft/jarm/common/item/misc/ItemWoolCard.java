@@ -2,14 +2,17 @@ package br.com.cabralrodrigo.minecraft.jarm.common.item.misc;
 
 import br.com.cabralrodrigo.minecraft.jarm.common.item.ItemJarmBase;
 import br.com.cabralrodrigo.minecraft.jarm.common.lib.LibItems;
-import br.com.cabralrodrigo.minecraft.jarm.common.util.ItemHelper;
+import br.com.cabralrodrigo.minecraft.jarm.api.util.ItemHelper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -39,17 +42,21 @@ public class ItemWoolCard extends ItemJarmBase {
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         IBlockState state = world.getBlockState(pos);
-        if (state != null && state.getBlock() == Blocks.wool) {
-            if (!world.isRemote) {
-                world.setBlockToAir(pos);
-                ItemHelper.spawnItemStack(world, pos, new ItemStack(Items.string, 4));
-            } else
-                player.playSound("dig.cloth", 1F, rand.nextFloat() * (1F - .2F) + .2F);
+        if (state != null) {
+            if (state.getBlock() == Blocks.WOOL) {
+                if (!world.isRemote) {
+                    world.setBlockToAir(pos);
+                    ItemHelper.spawnItemStack(world, pos, new ItemStack(Items.STRING, 4));
+                } else
 
-            return true;
+                    player.playSound(SoundEvents.BLOCK_CLOTH_BREAK, 1F, rand.nextFloat() * (1F - .2F) + .2F);
+
+                return EnumActionResult.SUCCESS;
+            } else
+                return EnumActionResult.FAIL;
         } else
-            return false;
+            return EnumActionResult.PASS;
     }
 }
