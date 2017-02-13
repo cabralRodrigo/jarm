@@ -70,7 +70,7 @@ public class ItemSeedBag extends ItemJarmBase {
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         if (!world.isRemote)
             if (player.isSneaking())
-                player.openGui(Jarm.instance, LibGui.SEED_BAG, world, EnumHandHelper.ToInt(hand), 0, 0);
+                player.openGui(Jarm.instance, LibGui.SEED_BAG, world, EnumHandHelper.toInt(hand), 0, 0);
 
         return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
     }

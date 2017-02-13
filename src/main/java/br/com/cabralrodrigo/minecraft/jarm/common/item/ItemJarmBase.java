@@ -3,12 +3,15 @@ package br.com.cabralrodrigo.minecraft.jarm.common.item;
 import br.com.cabralrodrigo.minecraft.jarm.common.Jarm;
 import br.com.cabralrodrigo.minecraft.jarm.common.lib.LibMod;
 import br.com.cabralrodrigo.minecraft.jarm.common.registry.util.IRegistrable;
+import br.com.cabralrodrigo.minecraft.jarm.common.util.EnumHandHelper;
 import br.com.cabralrodrigo.minecraft.jarm.common.util.Translator;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -67,5 +70,10 @@ public abstract class ItemJarmBase extends Item implements IRegistrable {
     @SideOnly(Side.CLIENT)
     protected String translateForItem(String suffix, Object... format) {
         return Translator.translate("item", this.getName(), suffix, format);
+    }
+
+    protected void openGui(EntityPlayer player, World world, int guidId, EnumHand hand) {
+        if (!world.isRemote)
+            player.openGui(Jarm.instance, guidId, world, EnumHandHelper.toInt(hand), 0, 0);
     }
 }

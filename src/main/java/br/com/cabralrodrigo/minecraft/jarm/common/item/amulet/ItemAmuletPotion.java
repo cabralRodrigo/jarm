@@ -43,7 +43,7 @@ public class ItemAmuletPotion extends ItemAmuletVariantBase {
         if (!world.isRemote) {
             if (player.isSneaking()) {
                 this.setEnabled(itemStack, false);
-                player.openGui(Jarm.instance, LibGui.AMULET_POTION, world, EnumHandHelper.ToInt(hand), 0, 0);
+                player.openGui(Jarm.instance, LibGui.AMULET_POTION, world, EnumHandHelper.toInt(hand), 0, 0);
             } else
                 this.setEnabled(itemStack, !this.isEnabled(itemStack));
         }

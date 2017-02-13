@@ -38,7 +38,7 @@ public class BlockEnderEnchantmentTable extends BlockEnchantmentTable implements
         if (!world.isRemote) {
             TileEntity tile = world.getTileEntity(pos);
             if (tile instanceof TileEntityEnderEnchantmentTable)
-                player.openGui(LibMod.MOD_ID, LibGui.ENDER_ENCHATMENT_TABLE, world, pos.getX(), pos.getY(), pos.getZ());
+                player.openGui(LibMod.MOD_ID, LibGui.ENDER_ENCHANTMENT_TABLE, world, pos.getX(), pos.getY(), pos.getZ());
         }
         return true;
     }

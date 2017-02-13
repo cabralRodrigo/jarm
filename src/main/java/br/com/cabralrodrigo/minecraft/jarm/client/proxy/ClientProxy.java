@@ -3,6 +3,7 @@ package br.com.cabralrodrigo.minecraft.jarm.client.proxy;
 import br.com.cabralrodrigo.minecraft.jarm.client.gui.*;
 import br.com.cabralrodrigo.minecraft.jarm.client.registry.ModRenderers;
 import br.com.cabralrodrigo.minecraft.jarm.client.util.InventoryRenderHelper;
+import br.com.cabralrodrigo.minecraft.jarm.common.inventory.impl.amulet.InventoryAmuletStorage;
 import br.com.cabralrodrigo.minecraft.jarm.common.lib.LibGui;
 import br.com.cabralrodrigo.minecraft.jarm.common.lib.LibMod;
 import br.com.cabralrodrigo.minecraft.jarm.common.proxy.CommonProxy;
@@ -15,6 +16,7 @@ import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -48,18 +50,26 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public Object getClientGuiElement(int id, EntityPlayer player, World world, int p1, int p2, int p3) {
+        EnumHand hand = null;
+        BlockPos pos = null;
+
+        if (LibGui.BlockPosOnGuiOpen.contains(id))
+            pos = new BlockPos(p1, p2, p3);
+        else
+            hand = EnumHandHelper.toEnum(p1);
+
         if (world instanceof WorldClient)
             switch (id) {
                 case LibGui.AMULET_STORAGE:
-                    return new GuiAmuletStorage(player, EnumHandHelper.ToEnum(p1));
-                case LibGui.ENDER_ENCHATMENT_TABLE:
+                    return new GuiAmuletStorage(player, hand, new InventoryAmuletStorage(player.getHeldItem(hand)));
+                case LibGui.ENDER_ENCHANTMENT_TABLE:
                     return new GuiEnderEnchantmentTable(player);
                 case LibGui.SEED_BAG:
-                    return new GuiSeedBag(player, EnumHandHelper.ToEnum(p1));
+                    return new GuiSeedBag(player, hand);
                 case LibGui.AMULET_POTION:
-                    return new GuiAmuletPotion(player, EnumHandHelper.ToEnum(p1));
+                    return new GuiAmuletPotion(player, hand);
                 case LibGui.AMULET_STAMPER:
-                    return new GuiAmuletStamper(player, (TileEntityAmuletStamper) world.getTileEntity(new BlockPos(p1, p2, p3)));
+                    return new GuiAmuletStamper(player, (TileEntityAmuletStamper) world.getTileEntity(pos));
             }
 
         return null;
