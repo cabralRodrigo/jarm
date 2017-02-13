@@ -40,8 +40,11 @@ public class ItemAmuletTeleposer extends ItemAmuletBase {
 
         NBTTagCompound nbtSpawner = this.getSpawnerInfo(stack);
         if (nbtSpawner != null) {
+            String entityId = getEntityStringFromNbtSpawner(nbtSpawner);
+            String entityName = Translator.translateEntityName(entityId);
+
             tooltip.add(this.translateForItem("tooltip.place"));
-            tooltip.add(this.translateForItem("tooltip.mob", Translator.translateEntityName(nbtSpawner.getString("EntityId"))));
+            tooltip.add(this.translateForItem("tooltip.mob", entityName));
         } else
             tooltip.add(this.translateForItem("tooltip.pickup"));
     }
@@ -63,7 +66,7 @@ public class ItemAmuletTeleposer extends ItemAmuletBase {
                     world.notifyBlockUpdate(posSpawner, Blocks.MOB_SPAWNER.getDefaultState(), Blocks.MOB_SPAWNER.getDefaultState(), 3);
 
                     if (!player.capabilities.isCreativeMode)
-                        player.setHeldItem(hand, null);
+                        player.setHeldItem(hand, ItemStack.EMPTY);
                 } else
                     return EnumActionResult.SUCCESS;
             }
@@ -75,7 +78,8 @@ public class ItemAmuletTeleposer extends ItemAmuletBase {
                     tile.writeToNBT(nbtSpawner);
 
                     this.setSpawnerInfo(stack, nbtSpawner);
-                    world.destroyBlock(pos, false);
+                    if (!player.capabilities.isCreativeMode)
+                        world.destroyBlock(pos, false);
                 } else
                     return EnumActionResult.SUCCESS;
             }
@@ -107,5 +111,13 @@ public class ItemAmuletTeleposer extends ItemAmuletBase {
 
         nbtStack.setTag(NBT_SPAWNER, nbtSpawner);
         stack.setTagCompound(nbtStack);
+    }
+
+    private String getEntityStringFromNbtSpawner(NBTTagCompound nbtSpawner) {
+        NBTTagCompound nbt = nbtSpawner.getCompoundTag("SpawnData");
+        if (nbt != null)
+            return nbt.getString("id");
+
+        return null;
     }
 }

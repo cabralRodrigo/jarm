@@ -2,6 +2,8 @@ package br.com.cabralrodrigo.minecraft.jarm.common.util;
 
 import br.com.cabralrodrigo.minecraft.jarm.common.lib.LibMod;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.EntityList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 
@@ -17,7 +19,7 @@ public final class Translator {
     }
 
     public static String translateEntityName(String entity) {
-       return I18n.format("entity." + entity + ".name");
+        return  I18n.format("entity." + EntityList.getTranslationName(new ResourceLocation(entity)) + ".name");
     }
 
     public static ITextComponent translateChat(String category, String key, String key2) {
