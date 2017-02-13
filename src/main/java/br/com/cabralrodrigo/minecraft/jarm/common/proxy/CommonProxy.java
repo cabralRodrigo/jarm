@@ -6,6 +6,7 @@ import br.com.cabralrodrigo.minecraft.jarm.common.inventory.container.amulet.Con
 import br.com.cabralrodrigo.minecraft.jarm.common.inventory.container.misc.ContainerAmuletStamper;
 import br.com.cabralrodrigo.minecraft.jarm.common.inventory.container.misc.ContainerEnderEnchantmentTable;
 import br.com.cabralrodrigo.minecraft.jarm.common.inventory.container.misc.ContainerSeedBag;
+import br.com.cabralrodrigo.minecraft.jarm.common.inventory.impl.amulet.InventoryAmuletPotion;
 import br.com.cabralrodrigo.minecraft.jarm.common.inventory.impl.amulet.InventoryAmuletStorage;
 import br.com.cabralrodrigo.minecraft.jarm.common.lib.LibGui;
 import br.com.cabralrodrigo.minecraft.jarm.common.registry.*;
@@ -76,7 +77,7 @@ public class CommonProxy implements IProxy {
             case LibGui.SEED_BAG:
                 return new ContainerSeedBag(player, hand);
             case LibGui.AMULET_POTION:
-                return new ContainerAmuletPotion(player, hand);
+                return new ContainerAmuletPotion(player, hand, new InventoryAmuletPotion(player.getHeldItem(hand)));
             case LibGui.AMULET_STAMPER:
                 return new ContainerAmuletStamper(player, (TileEntityAmuletStamper) world.getTileEntity(pos));
         }

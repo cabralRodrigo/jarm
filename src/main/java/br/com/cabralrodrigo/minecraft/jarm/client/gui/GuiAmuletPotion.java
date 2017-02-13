@@ -1,8 +1,10 @@
 package br.com.cabralrodrigo.minecraft.jarm.client.gui;
 
 import br.com.cabralrodrigo.minecraft.jarm.client.lib.LibGuiTextures;
+import br.com.cabralrodrigo.minecraft.jarm.common.inventory.container.ContainerBase;
 import br.com.cabralrodrigo.minecraft.jarm.common.inventory.container.ContainerJarmBase;
 import br.com.cabralrodrigo.minecraft.jarm.common.inventory.container.amulet.ContainerAmuletPotion;
+import br.com.cabralrodrigo.minecraft.jarm.common.inventory.impl.amulet.InventoryAmuletPotion;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumHand;
@@ -12,8 +14,8 @@ import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class GuiAmuletPotion extends GuiContainer {
-    public GuiAmuletPotion(EntityPlayer player, EnumHand hand) {
-        super(new ContainerAmuletPotion(player, hand));
+    public GuiAmuletPotion(EntityPlayer player, EnumHand hand, InventoryAmuletPotion inventoryAmuletPotion) {
+        super(new ContainerAmuletPotion(player, hand, inventoryAmuletPotion));
         this.xSize = 176;
         this.ySize = 168;
     }
@@ -29,8 +31,8 @@ public class GuiAmuletPotion extends GuiContainer {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        ContainerJarmBase container = (ContainerJarmBase) this.inventorySlots;
-        this.fontRendererObj.drawString(container.getJarmInventory().getDisplayName().getUnformattedText(), 8, 6, 4210752);
+        ContainerBase container = (ContainerBase) this.inventorySlots;
+        this.fontRendererObj.drawString(container.getInventoryName(), 8, 6, 4210752);
         this.fontRendererObj.drawString(container.getPlayer().inventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2, 4210752);
     }
 }
