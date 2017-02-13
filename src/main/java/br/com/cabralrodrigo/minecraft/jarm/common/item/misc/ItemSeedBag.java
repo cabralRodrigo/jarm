@@ -1,22 +1,28 @@
 package br.com.cabralrodrigo.minecraft.jarm.common.item.misc;
 
-import br.com.cabralrodrigo.minecraft.jarm.common.Jarm;
-import br.com.cabralrodrigo.minecraft.jarm.common.inventory.impl.misc.InventorySeedBag;
+import br.com.cabralrodrigo.minecraft.jarm.common.capability.CapabilityProviderItemHandler;
 import br.com.cabralrodrigo.minecraft.jarm.common.item.ItemJarmBase;
 import br.com.cabralrodrigo.minecraft.jarm.common.lib.LibGui;
 import br.com.cabralrodrigo.minecraft.jarm.common.lib.LibItems;
-import br.com.cabralrodrigo.minecraft.jarm.common.util.EnumHandHelper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemSeedBag extends ItemJarmBase {
@@ -25,6 +31,12 @@ public class ItemSeedBag extends ItemJarmBase {
         this.setHasSubtypes(false);
         this.setNoRepair();
         this.setMaxStackSize(1);
+    }
+
+    @Nullable
+    @Override
+    public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) {
+        return new CapabilityProviderItemHandler(3 * 9);
     }
 
     @Override
@@ -41,7 +53,6 @@ public class ItemSeedBag extends ItemJarmBase {
         IBlockState block = world.getBlockState(pos);
         if (block != null && facing == EnumFacing.UP) {
             if (!world.isRemote) {
-                InventorySeedBag inventory = new InventorySeedBag(stack);
 
                 for (int x = -4; x <= 4; x++)
                     for (int z = -4; z <= 4; z++) {
@@ -49,17 +60,19 @@ public class ItemSeedBag extends ItemJarmBase {
                         if (world.isAirBlock(farmPos))
                             continue;
 
-                        for (int slotIndex = 0; slotIndex < inventory.getSizeInventory(); slotIndex++) {
-                            ItemStack stackSeed = inventory.removeStackFromSlot(slotIndex);
+                        IItemHandlerModifiable handler = (IItemHandlerModifiable) stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+
+                        for (int slotIndex = 0; slotIndex < handler.getSlots(); slotIndex++) {
+                            ItemStack stackSeed = handler.extractItem(slotIndex, 1, false);
+
                             if (stackSeed != null) {
-                                stackSeed = this.tryToPlant(stackSeed, player, farmPos, world, hitX, hitY, hitZ);
-                                if (slotIndex >= 0 && stackSeed != null && stackSeed.getCount() > 0)
-                                    inventory.setInventorySlotContents(slotIndex, stackSeed);
+                                stackSeed = this.tryToPlant(stackSeed, player, farmPos, world);
+
+                                if (!stackSeed.isEmpty())
+                                    handler.insertItem(slotIndex, stackSeed, false);
                             }
                         }
                     }
-
-                inventory.serializeIntoItemStack(stack);
             }
             return EnumActionResult.SUCCESS;
         } else
@@ -70,7 +83,7 @@ public class ItemSeedBag extends ItemJarmBase {
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         if (!world.isRemote)
             if (player.isSneaking())
-                player.openGui(Jarm.instance, LibGui.SEED_BAG, world, EnumHandHelper.toInt(hand), 0, 0);
+                this.openGui(player, world, LibGui.SEED_BAG, hand);
 
         return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
     }
@@ -83,7 +96,7 @@ public class ItemSeedBag extends ItemJarmBase {
             tooltip.add(this.translateForItem("tooltip.easter_egg"));
     }
 
-    private ItemStack tryToPlant(ItemStack stack, EntityPlayer player, BlockPos pos, World world, float hitX, float hitY, float hitZ) {
+    private ItemStack tryToPlant(ItemStack stack, EntityPlayer player, BlockPos pos, World world) {
         if (stack != null && stack.getItem() instanceof IPlantable) {
             if (this.canBePlantedAt(player, pos, stack, world)) {
                 world.setBlockState(pos.up(), ((IPlantable) stack.getItem()).getPlant(world, pos.up()));
@@ -104,7 +117,6 @@ public class ItemSeedBag extends ItemJarmBase {
             return false;
 
         IBlockState state = world.getBlockState(pos);
-
         boolean canBePlanted = state.getBlock().canSustainPlant(state, world, pos, EnumFacing.UP, (IPlantable) stack.getItem());
 
         return canBePlanted && world.isAirBlock(pos.up());

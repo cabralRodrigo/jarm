@@ -1,13 +1,11 @@
 
 package br.com.cabralrodrigo.minecraft.jarm.common.inventory.impl;
 
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
 import javax.annotation.Nonnull;
-import java.util.Set;
 
 public class InventoryBaseNew implements IItemHandlerModifiable {
     private final IItemHandlerModifiable handler;

@@ -5,6 +5,7 @@ import br.com.cabralrodrigo.minecraft.jarm.client.registry.ModRenderers;
 import br.com.cabralrodrigo.minecraft.jarm.client.util.InventoryRenderHelper;
 import br.com.cabralrodrigo.minecraft.jarm.common.inventory.impl.amulet.InventoryAmuletPotion;
 import br.com.cabralrodrigo.minecraft.jarm.common.inventory.impl.amulet.InventoryAmuletStorage;
+import br.com.cabralrodrigo.minecraft.jarm.common.inventory.impl.misc.InventorySeedBag;
 import br.com.cabralrodrigo.minecraft.jarm.common.lib.LibGui;
 import br.com.cabralrodrigo.minecraft.jarm.common.lib.LibMod;
 import br.com.cabralrodrigo.minecraft.jarm.common.proxy.CommonProxy;
@@ -66,7 +67,7 @@ public class ClientProxy extends CommonProxy {
                 case LibGui.ENDER_ENCHANTMENT_TABLE:
                     return new GuiEnderEnchantmentTable(player);
                 case LibGui.SEED_BAG:
-                    return new GuiSeedBag(player, hand);
+                    return new GuiSeedBag(player, hand, new InventorySeedBag(player.getHeldItem(hand)));
                 case LibGui.AMULET_POTION:
                     return new GuiAmuletPotion(player, hand, new InventoryAmuletPotion(player.getHeldItem(hand)));
                 case LibGui.AMULET_STAMPER:

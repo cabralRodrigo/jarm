@@ -1,8 +1,10 @@
 package br.com.cabralrodrigo.minecraft.jarm.client.gui;
 
 import br.com.cabralrodrigo.minecraft.jarm.client.lib.LibGuiTextures;
+import br.com.cabralrodrigo.minecraft.jarm.common.inventory.container.ContainerBase;
 import br.com.cabralrodrigo.minecraft.jarm.common.inventory.container.ContainerJarmBase;
 import br.com.cabralrodrigo.minecraft.jarm.common.inventory.container.misc.ContainerSeedBag;
+import br.com.cabralrodrigo.minecraft.jarm.common.inventory.impl.misc.InventorySeedBag;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumHand;
@@ -12,8 +14,8 @@ import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class GuiSeedBag extends GuiContainer {
-    public GuiSeedBag(EntityPlayer player, EnumHand hand) {
-        super(new ContainerSeedBag(player, hand));
+    public GuiSeedBag(EntityPlayer player, EnumHand hand, InventorySeedBag inventorySeedBag) {
+        super(new ContainerSeedBag(player, hand, inventorySeedBag));
         this.xSize = 176;
         this.ySize = 168;
     }
@@ -29,8 +31,8 @@ public class GuiSeedBag extends GuiContainer {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        ContainerJarmBase container = (ContainerJarmBase) this.inventorySlots;
-        this.fontRendererObj.drawString(container.getJarmInventory().getDisplayName().getUnformattedText(), 8, 6, 4210752);
+        ContainerBase container = (ContainerBase) this.inventorySlots;
+        this.fontRendererObj.drawString(container.getInventoryName(), 8, 6, 4210752);
         this.fontRendererObj.drawString(container.getPlayer().inventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2, 4210752);
     }
 }

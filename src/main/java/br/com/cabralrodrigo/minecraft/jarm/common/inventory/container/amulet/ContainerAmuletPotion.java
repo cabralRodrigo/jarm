@@ -7,11 +7,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerAmuletPotion extends ContainerBase {
-    private int amuletSlot;
 
     public ContainerAmuletPotion(EntityPlayer player, EnumHand hand, InventoryAmuletPotion inventoryAmuletPotion) {
         super(player, inventoryAmuletPotion, 86, hand == EnumHand.MAIN_HAND ? player.inventory.currentItem : -1);
-        this.amuletSlot = player.inventory.currentItem;
     }
 
     @Override
